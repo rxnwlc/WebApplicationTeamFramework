@@ -24,8 +24,13 @@ public class AppConstants {
 	public static final int CREATE_AN_ACCOUNT_PAGE_PERSONAL_FORM_FIELDS_COUNT = 4;
 	public static final List<String> CREATE_AN_ACCOUNT_PAGE_PERSONAL_FORM_FIELDS_LIST = Arrays.asList("Email Address", "Password", "Zip Code", "Phone");
 	public static final List<String> CREATE_AN_ACCOUNT_PAGE_PERSONAL_FORM_CHECKBOX_LIST = Arrays.asList("Keep me signed in Only check if on a private device", "Verify my mobile number via text message or phone call Message and data rates may apply.");
-	public static final String CREATE_AN_ACCOUTN_PAGE_KEEP_ME_SIGNED_IN_VALUE = "We'll keep you signed in on this device. You may need to sign in again when editing sensitive account information.";
-	
-	
+	public static final String CREATE_AN_ACCOUNT_PAGE_KEEP_ME_SIGNED_IN_VALUE = "We'll keep you signed in on this device. You may need to sign in again when editing sensitive account information.";
+	public static final List<String> CREATE_AN_ACCOUNT_PAGE_PASSWORD_REQUIREMENTS_LIST = Arrays.asList("Passwords must contain:",  "9 characters minimum", "And 3 of the following:",  "Uppercase letter",  "Number",  "Lowercase letter",  "Special characters");
+	public static final String CREATE_AN_ACCOUNT_PAGE_PERSONAL_ACCOUNT_CREATION_BUTTON_LABEL_VALUE = "Create an Account";
+	public static final String CREATE_AN_ACCOUNT_PAGE_PERSONAL_ACCOUNT_CAPTCHA_MESSAGE_VALUE = "Please Verify that you are not a robot.";
+	public static final String CREATE_AN_ACCOUNT_PAGE_CURRENT_ACCOUNT_HOLDER_QUESTION_VALUE = "Already Have an Account?";
+	public static final List<String> CREATE_AN_ACCOUTN_PAGE_LEGAL_LINKS_SECTION_LIST = Arrays.asList("By selecting 'Create an Account' you are agreeing to the Pro Xtra Terms and Conditions, Privacy and Security Statement, & My Account Terms and Conditions.");
+
+	public static final String CREATE_AN_ACCOUNT_PAGE_SIGN_IN_FORM_MESSAGE_VALUE = "First, enter your email address";
 
 }

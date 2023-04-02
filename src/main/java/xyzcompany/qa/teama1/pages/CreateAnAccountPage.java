@@ -2,10 +2,13 @@ package xyzcompany.qa.teama1.pages;
 
 import java.util.List;
 
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import xyzcompany.qa.coe_web.utils.ElementUtil;
+import xyzcompany.qa.coe_web.utils.JavaScriptUtil;
 import xyzcompany.qa.teama1.constants.AppConstants;
 import xyzcompany.qa.coe_web.constants.WaitConstants;
 
@@ -17,6 +20,7 @@ public class CreateAnAccountPage {
 	
 	private WebDriver driver;
 	private ElementUtil eleUtil;
+	private JavaScriptUtil jsUtil;
 	
 	
 	
@@ -42,14 +46,16 @@ public class CreateAnAccountPage {
 	private By personalAccountCheckBoxLabels = By.xpath("(//div[@class='checkbox-btn']/following-sibling::label)");
 	private By emailField = By.id("email");
 	private By passwordField = By.id("password-input-field");
+	private By passwordStrengthRequirements = By.xpath("//div[@class='u__bold'] | //div[contains(@class,'password-req-entry')]");
 	private By showPasswordLink = By.id("showPasswordCheck");
 	private By zipCodeField = By.id("zipCode");
 	private By phoneNumberField = By.id("phone");
-	private By keepMeSignedInCheckBox = By.id("kmsi-checkbox");
+	private By keepMeSignedInCheckBox = By.xpath("//label[@for='kmsi-checkbox']");
 	private By keepMeSignedInToolTipIcon = By.className("kmsi-tooltip");
 	private By keepMeSignedInToolTipText = By.xpath("//div[@class='tippy-content']//span");
 	private By keepMeSignedInToolTipCloseBtn = By.xpath("//div[@class='tippy-content']//button");
-	private By verifyPhoneNumberCheckBox = By.id("verify-phone-checkbox");
+	private By verifyPhoneNumberCheckBox = By.xpath("//label[@for='verify-phone-checkbox']");
+	private By captchaMessage = By.xpath("//div[@class='form-input-error__message u--marginXsmall-top']");
 	private By personalAccountCreateBtn = By.xpath("//button[@data-automation-id='registrationCreateAnAccountButton']");
 	private By currentAccountHolderQuestion = By.xpath("//div[@class='col__12-12 u__text-align--center u--paddingNormal-vertical']");
 	private By signInLink = By.xpath("//span[@data-automation-id='registrationSignInButton']");
@@ -59,9 +65,13 @@ public class CreateAnAccountPage {
 	private By privacyAndSecurityStatementLink = By.linkText("Privacy and Security Statement");
 	private By myAccountTermsAndConditionsLink = By.linkText("My Account Terms and Conditions");
 	
+	private By signInFormMessage = By.className("u--paddingNormal-bottom");
+	
+	
 	public CreateAnAccountPage(WebDriver driver) {
 		this.driver = driver;
 		eleUtil = new ElementUtil(driver);
+		jsUtil = new JavaScriptUtil(driver);
 	}
 	
 	public boolean doesPageLogoExist() {
@@ -143,7 +153,7 @@ public class CreateAnAccountPage {
 	
 	public List<String> getPersonalFormCheckBoxLabels() {
 		eleUtil.doClick(personalAccountBtn);
-		eleUtil.waitForElementsPresence(personalAccountCheckBoxLabels, WaitConstants.DEFAULT_SHORT_TIME_OUT);
+		eleUtil.waitForElementsPresence(personalAccountFormFields, WaitConstants.DEFAULT_SHORT_TIME_OUT);
 		List<String> actualList = eleUtil.getElementsTextList(personalAccountCheckBoxLabels);
 		System.out.println(actualList);
 		eleUtil.doClick(backBtn);
@@ -152,7 +162,7 @@ public class CreateAnAccountPage {
 	
 	public boolean doesKeepMeSignedInToolTipIconExist() {
 		eleUtil.doClick(personalAccountBtn);
-		eleUtil.waitForElementPresence(keepMeSignedInCheckBox, WaitConstants.DEFAULT_SHORT_TIME_OUT);
+		eleUtil.waitForElementPresence(personalAccountFormFields, WaitConstants.DEFAULT_SHORT_TIME_OUT);
 		boolean iconFlag =  eleUtil.doElementIsDisplayed(keepMeSignedInToolTipIcon);
 		eleUtil.doClick(backBtn);
 		return iconFlag;
@@ -167,6 +177,70 @@ public class CreateAnAccountPage {
 		return actualText;
 	}
 	
+	public List<String> getPasswordRequirementsText() {
+		eleUtil.doClick(personalAccountBtn);
+		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, passwordField);
+		List<String> actualList = eleUtil.getElementsTextList(passwordStrengthRequirements);
+		eleUtil.doClick(backBtn);
+		return actualList;
+	}
+	
+	public String fillInPersonalForm(String emailAddress, String password, int zipCode, String phoneNumber) {
+		eleUtil.doClick(personalAccountBtn);
+		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, emailField);
+		eleUtil.doSendKeys(emailField, emailAddress);
+		eleUtil.doSendKeys(passwordField, password);
+		eleUtil.doSendKeys(zipCodeField, zipCode);
+		eleUtil.doSendKeys(phoneNumberField, phoneNumber);
+		eleUtil.doClick(keepMeSignedInCheckBox);
+		eleUtil.doClick(verifyPhoneNumberCheckBox);
+		eleUtil.doClick(personalAccountCreateBtn);
+		String actualText =  eleUtil.doElementGetText(captchaMessage);
+		eleUtil.doClick(backBtn);
+		return actualText;
+	}
+	
+	public String getPersonalAccountCreationButtonText() {
+		eleUtil.doClick(personalAccountBtn);
+		eleUtil.waitForElementPresence(personalAccountFormFields, WaitConstants.DEFAULT_SHORT_TIME_OUT);
+		String actualText = eleUtil.doElementGetText(personalAccountCreateBtn);
+		eleUtil.doClick(backBtn);
+		return actualText;
+	}
+	
+	public String getCurrentAccountHolderQuestionText() {
+		eleUtil.doClick(personalAccountBtn);
+		eleUtil.waitForElementPresence(personalAccountFormFields, WaitConstants.DEFAULT_SHORT_TIME_OUT);
+		String actualText = eleUtil.doElementGetText(currentAccountHolderQuestion);
+		eleUtil.doClick(backBtn);
+		return actualText;
+	}
+	
+	public boolean doesSignInLinkExist() {
+		eleUtil.doClick(personalAccountBtn);
+		eleUtil.waitForElementPresence(personalAccountFormFields, WaitConstants.DEFAULT_SHORT_TIME_OUT);
+		boolean signInLinkFlag = eleUtil.doElementIsDisplayed(signInLink);
+		eleUtil.doClick(backBtn);
+		return signInLinkFlag;
+	}
+	
+	public String clickSignInLink() {
+		eleUtil.doClick(personalAccountBtn);
+		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, signInLink);
+		String actualText = eleUtil.doElementGetText(signInFormMessage);
+		eleUtil.doClick(backBtn);
+		eleUtil.doClick(backBtn);
+		return actualText;
+	}
+	
+	public List<String> getLegalLinksSectionText() {
+		eleUtil.doClick(personalAccountBtn);
+		eleUtil.waitForElementsPresence(personalAccountCheckBoxLabels, WaitConstants.DEFAULT_SHORT_TIME_OUT);
+		List<String> actualList = eleUtil.getElementsTextList(legalLinksText);
+		eleUtil.doClick(backBtn);
+		return actualList;
+	}
+
 
 
 }
