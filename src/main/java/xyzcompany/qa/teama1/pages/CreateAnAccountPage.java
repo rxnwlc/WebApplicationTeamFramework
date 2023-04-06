@@ -4,6 +4,7 @@ import java.util.List;
 
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -34,7 +35,7 @@ public class CreateAnAccountPage {
 	private By personalSectionHeader = By.xpath("(//div[@data-automation-id='diy-type-button']//p)[1]");
 	private By personalSectionMessage = By.xpath("(//div[@data-automation-id='diy-type-button']//p)[2]");
 	private By personalIncentiveList = By.xpath("(//div[@data-automation-id='diy-type-button']//li)");
-	private By personalAccountBtn = By.xpath("(//div[@data-automation-id='diy-type-button']//button)");
+	private By personalAccountBtn = By.xpath("(//button[@class='bttn--primary'])[1]");
 	
 	private By professionalSectionLogo = By.xpath("//div[@data-automation-id='proxtra-type-button']//img[@alt='pro-xtra-logo']");
 	private By professionalSectionHeader = By.xpath("(//div[@data-automation-id='proxtra-type-button']//p)[1]");
@@ -43,13 +44,24 @@ public class CreateAnAccountPage {
 	private By professionalAccountBtn = By.xpath("(//div[@data-automation-id='proxtra-type-button']//button)");
 	
 	private By personalAccountFormFields = By.xpath("(//form/div/label)");
-	private By personalAccountCheckBoxLabels = By.xpath("(//div[@class='checkbox-btn']/following-sibling::label)");
+	private By personalAccountCheckBoxLabels = By.xpath("//div[contains(@class,'checkbox-btn')]/following-sibling::label");
 	private By emailField = By.id("email");
+	private By emailFieldErrorMessage = By.xpath("//span[@data-automation-id='registrationEmailErrorField']");
 	private By passwordField = By.id("password-input-field");
-	private By passwordStrengthRequirements = By.xpath("//div[@class='u__bold'] | //div[contains(@class,'password-req-entry')]");
 	private By showPasswordLink = By.id("showPasswordCheck");
+	private By hidePasswordLink = By.id("showPasswordCheck");
+	private By passwordFieldErrorMessage = By.xpath("//span[@data-automation-id='registrationPasswordErrorField']");
+	private By passwordStrengthRequirements = By.xpath("//div[@class='u__bold'] | //div[contains(@class,'password-req-entry')]");
+	private By passwordRequirementMinCharIcon = By.xpath("(//div[contains(@class,'req-icon')])[1]/img");
+	private By passwordRequirementUppercaseLetterIcon = By.xpath("(//div[contains(@class,'req-icon')])[2]/img");
+	private By passwordRequirementNumberIcon = By.xpath("(//div[contains(@class,'req-icon')])[3]/img");
+	private By passwordRequirementLowercaseLetterIcon = By.xpath("(//div[contains(@class,'req-icon')])[4]/img");
+	private By passwordRequirementSpecialCharIcon = By.xpath("(//div[contains(@class,'req-icon')])[5]/img");
+	private By passwordStrengthMeter = By.xpath("//div[contains(@class,'u--padding-bottom u__bold')]");
 	private By zipCodeField = By.id("zipCode");
+	private By zipCodeFieldErrorMessage = By.xpath("//span[@data-automation-id='registrationZipcodeErrorField']");
 	private By phoneNumberField = By.id("phone");
+	private By phoneNumberFieldErrorMessage = By.xpath("//span[@data-automation-id='registrationPhoneErrorField']");
 	private By keepMeSignedInCheckBox = By.xpath("//label[@for='kmsi-checkbox']");
 	private By keepMeSignedInToolTipIcon = By.className("kmsi-tooltip");
 	private By keepMeSignedInToolTipText = By.xpath("//div[@class='tippy-content']//span");
@@ -60,7 +72,7 @@ public class CreateAnAccountPage {
 	private By currentAccountHolderQuestion = By.xpath("//div[@class='col__12-12 u__text-align--center u--paddingNormal-vertical']");
 	private By signInLink = By.xpath("//span[@data-automation-id='registrationSignInButton']");
 	private By legalLinksText = By.className("modal-legal-links");
-	private By legalLinks = By.xpath("(//div[@class='modal-legal-links u--paddingSmall-top u__text-align--center u__small']/a)");
+	private By legalLinks = By.xpath("//div[@class='modal-legal-links u--paddingSmall-top u__text-align--center u__small']/a");
 	private By proXtraTermsAndConditionsLink = By.linkText("Pro Xtra Terms and Conditions");
 	private By privacyAndSecurityStatementLink = By.linkText("Privacy and Security Statement");
 	private By myAccountTermsAndConditionsLink = By.linkText("My Account Terms and Conditions");
@@ -233,6 +245,24 @@ public class CreateAnAccountPage {
 		return actualText;
 	}
 	
+	public int getLegalLinksCount() {
+		eleUtil.doClick(personalAccountBtn);
+		eleUtil.waitForElementPresence(personalAccountFormFields, WaitConstants.DEFAULT_SHORT_TIME_OUT);
+		int linksCount = eleUtil.getElements(legalLinks).size();
+		eleUtil.doClick(backBtn);
+		return linksCount;
+	}
+	
+	public List<String> getLegalLinksText() {
+		eleUtil.doClick(personalAccountBtn);
+		eleUtil.waitForElementPresence(personalAccountFormFields, WaitConstants.DEFAULT_SHORT_TIME_OUT);
+		List<String> actualList = eleUtil.getElementsTextList(legalLinks);
+		System.out.println(actualList);
+		eleUtil.doClick(backBtn);
+		return actualList;
+	}
+	
+	
 	public List<String> getLegalLinksSectionText() {
 		eleUtil.doClick(personalAccountBtn);
 		eleUtil.waitForElementsPresence(personalAccountCheckBoxLabels, WaitConstants.DEFAULT_SHORT_TIME_OUT);
@@ -240,6 +270,192 @@ public class CreateAnAccountPage {
 		eleUtil.doClick(backBtn);
 		return actualList;
 	}
+	
+	public String clickProXtraTermsAndConditionsLink() {
+		eleUtil.doClick(personalAccountBtn);
+		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, proXtraTermsAndConditionsLink);
+		eleUtil.switchToChildWindowID();
+		String actualTitle = eleUtil.waitForTitleIsAndFetch(WaitConstants.DEFAULT_SHORT_TIME_OUT, AppConstants.PRO_XTRA_TERMS_AND_CONDITIONS_PAGE_TITLE_VALUE);
+		driver.close();
+		eleUtil.switchToParentWindowID();
+		eleUtil.doClick(backBtn);
+		return actualTitle;
+	}
+	
+	public String clickPrivacyAndSecurityStatementLink() {
+		eleUtil.doClick(personalAccountBtn);
+		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, privacyAndSecurityStatementLink);
+		eleUtil.switchToChildWindowID();
+		String actualTitle = eleUtil.waitForTitleIsAndFetch(WaitConstants.DEFAULT_SHORT_TIME_OUT, AppConstants.PRIVACY_AND_SECURITY_STATEMENT_PAGE_TITLE_VALUE);
+		driver.close();
+		eleUtil.switchToParentWindowID();
+		eleUtil.doClick(backBtn);
+		return actualTitle;
+	}
+	
+	public String clickMyAccountTermsAndConditionsLink() {
+		eleUtil.doClick(personalAccountBtn);
+		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, myAccountTermsAndConditionsLink);
+		eleUtil.switchToChildWindowID();
+		String actualTitle = eleUtil.waitForTitleIsAndFetch(WaitConstants.DEFAULT_SHORT_TIME_OUT, AppConstants.MY_ACCOUNT_TERMS_AND_CONDITIONS_PAGE_TITLE_VALUE);
+		driver.close();
+		eleUtil.switchToParentWindowID();
+		eleUtil.doClick(backBtn);
+		return actualTitle;
+	}
+	
+	public String getPersonalAccountEmailAddressErrorMessage1() {
+		eleUtil.doClick(personalAccountBtn);
+		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, emailField);
+		eleUtil.doSendKeys(emailField, "");
+		eleUtil.doTabBySendKeys(emailField);
+		String actualText =  eleUtil.doElementGetText(emailFieldErrorMessage);
+		eleUtil.doClick(backBtn);
+		return actualText;
+	}
+	
+	public String getPersonalAccountEmailAddressErrorMessage2(String emailAddress) {
+		eleUtil.doClick(personalAccountBtn);
+		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, emailField);
+		eleUtil.doClearData(emailField);
+		eleUtil.doSendKeys(emailField, emailAddress);
+		eleUtil.doTabBySendKeys(emailField);
+		String actualText =  eleUtil.doElementGetText(emailFieldErrorMessage);
+		eleUtil.doClick(backBtn);
+		return actualText;
+	}
+	
+	public String getPersonalAccountPasswordErrorMessage1() {
+		eleUtil.doClick(personalAccountBtn);
+		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, passwordField);
+		eleUtil.doSendKeys(passwordField, "");
+		eleUtil.doTabBySendKeys(passwordField);
+		String actualText =  eleUtil.doElementGetText(passwordFieldErrorMessage);
+		eleUtil.doClick(backBtn);
+		return actualText;
+	}
+	
+	public String getPersonalAccountPasswordErrorMessage2(String password) {
+		eleUtil.doClick(personalAccountBtn);
+		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, passwordField);
+		eleUtil.doClearData(passwordField);
+		eleUtil.doSendKeys(passwordField, password);
+		eleUtil.doTabBySendKeys(passwordField);
+		String actualText =  eleUtil.doElementGetText(passwordFieldErrorMessage);
+		eleUtil.doClick(backBtn);
+		return actualText;
+	}
+	
+	public String getPersonalAccountPasswordErrorMessage3(String password) {
+		eleUtil.doClick(personalAccountBtn);
+		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, passwordField);
+		eleUtil.doClearData(passwordField);
+		eleUtil.doSendKeys(passwordField, password);
+		eleUtil.doTabBySendKeys(passwordField);
+		String actualText =  eleUtil.doElementGetText(passwordFieldErrorMessage);
+		eleUtil.doClick(backBtn);
+		return actualText;
+	}
+	
+	public String getPersonalAccountZipCodeErrorMessage(int zipCode) {
+		eleUtil.doClick(personalAccountBtn);
+		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, zipCodeField);
+		eleUtil.doClearData(zipCodeField);
+		eleUtil.doSendKeys(zipCodeField, zipCode);
+		eleUtil.doTabBySendKeys(zipCodeField);
+		String actualText =  eleUtil.doElementGetText(zipCodeFieldErrorMessage);
+		eleUtil.doClick(backBtn);
+		return actualText;
+	}
+	
+	public String getPersonalAccountPhoneNumberErrorMessage(String phoneNumber) {
+		eleUtil.doClick(personalAccountBtn);
+		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, phoneNumberField);
+		eleUtil.doClearData(phoneNumberField);
+		eleUtil.doSendKeys(phoneNumberField, phoneNumber);
+		eleUtil.doTabBySendKeys(phoneNumberField);
+		String actualText =  eleUtil.doElementGetText(phoneNumberFieldErrorMessage);
+		eleUtil.doClick(backBtn);
+		return actualText;
+	}
+	
+	public String clickShowPasswordLink(String password) {
+		eleUtil.doClick(personalAccountBtn);
+		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, passwordField);
+		eleUtil.doClearData(passwordField);
+		eleUtil.doSendKeys(passwordField, password);
+		eleUtil.doClick(showPasswordLink);
+		String actualText =  eleUtil.doElementGetText(showPasswordLink);
+		eleUtil.doClick(backBtn);
+		return actualText;
+	}
+	
+	public String clickHidePasswordLink(String password) {
+		eleUtil.doClick(personalAccountBtn);
+		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, passwordField);
+		eleUtil.doClearData(passwordField);
+		eleUtil.doSendKeys(passwordField, password);
+		eleUtil.doClick(showPasswordLink);
+		eleUtil.doClick(hidePasswordLink);
+		String actualText =  eleUtil.doElementGetText(hidePasswordLink);
+		eleUtil.doClick(backBtn);
+		return actualText;
+	}
+	
+	public String getPasswordContainsMiniumCharatersIcon(String password) {
+		eleUtil.doClick(personalAccountBtn);
+		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, passwordField);
+		eleUtil.doClearData(passwordField);
+		eleUtil.doSendKeys(passwordField, password);
+		String srcLink = eleUtil.getElementAttribute(passwordRequirementMinCharIcon, "src");
+		return srcLink;
+	}
+	
+	public String getPasswordContainsUppercaseLetterIcon(String password) {
+		eleUtil.doClick(personalAccountBtn);
+		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, passwordField);
+		eleUtil.doClearData(passwordField);
+		eleUtil.doSendKeys(passwordField, password);
+		String srcLink = eleUtil.getElementAttribute(passwordRequirementUppercaseLetterIcon, "src");
+		return srcLink;
+	}
+	
+	public String getPasswordContainsNumberIcon(String password) {
+		eleUtil.doClick(personalAccountBtn);
+		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, passwordField);
+		eleUtil.doClearData(passwordField);
+		eleUtil.doSendKeys(passwordField, password);
+		String srcLink = eleUtil.getElementAttribute(passwordRequirementNumberIcon, "src");
+		return srcLink;
+	}
+	
+	public String getPasswordContainsLowercaseLetterIcon(String password) {
+		eleUtil.doClick(personalAccountBtn);
+		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, passwordField);
+		eleUtil.doClearData(passwordField);
+		eleUtil.doSendKeys(passwordField, password);
+		String srcLink = eleUtil.getElementAttribute(passwordRequirementLowercaseLetterIcon, "src");
+		return srcLink;
+	}
+	
+	public String getPasswordContainsSpecialCharaterIcon(String password) {
+		eleUtil.doClick(personalAccountBtn);
+		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, passwordField);
+		eleUtil.doClearData(passwordField);
+		eleUtil.doSendKeys(passwordField, password);
+		String srcLink = eleUtil.getElementAttribute(passwordRequirementSpecialCharIcon, "src");
+		return srcLink;
+	}
+	
+	public String getPasswordStrenthMeterText(String password) {
+		eleUtil.doClick(personalAccountBtn);
+		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, passwordField);
+		eleUtil.doClearData(passwordField);
+		eleUtil.doSendKeys(passwordField, password);
+		String actualText = eleUtil.doElementGetText(passwordStrengthMeter);
+		return actualText;
+	}
+	
 
 
 
