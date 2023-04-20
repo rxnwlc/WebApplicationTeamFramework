@@ -38,8 +38,8 @@ public class AppConstants {
 	public static final List<String> CREATE_AN_ACCOUNT_PAGE_PERSONAL_FORM_CHECKBOX_LIST = Arrays.asList("Keep me signed in Only check if on a private device", "Verify my mobile number via text message or phone call Message and data rates may apply.");
 	public static final String CREATE_AN_ACCOUNT_PAGE_KEEP_ME_SIGNED_IN_TOOL_TIP_VALUE = "We'll keep you signed in on this device. You may need to sign in again when editing sensitive account information.";
 	public static final List<String> CREATE_AN_ACCOUNT_PAGE_PASSWORD_REQUIREMENTS_LIST = Arrays.asList("Passwords must contain:",  "9 characters minimum", "And 3 of the following:",  "Uppercase letter",  "Number",  "Lowercase letter",  "Special characters");
-	public static final String CREATE_AN_ACCOUNT_PAGE_PASSWORD_REQUIREMENTS_NOT_MET_ICON = "https://assets.homedepot-static.com/single-signin-ui/v0.706.0/build/6a2ec2f1d4cbdf7706466d8e9cecb71d.svg";
-	public static final String CREATE_AN_ACCOUNT_PAGE_PASSWORD_REQUIREMENTS_MET_ICON = "https://assets.homedepot-static.com/single-signin-ui/v0.706.0/build/76972c85ea72c7b0fbda9184d5969470.svg";
+	public static final String CREATE_AN_ACCOUNT_PAGE_PASSWORD_REQUIREMENTS_NOT_MET_ICON = "https://assets.homedepot-static.com/single-signin-ui/v0.712.0/build/6a2ec2f1d4cbdf7706466d8e9cecb71d.svg";
+	public static final String CREATE_AN_ACCOUNT_PAGE_PASSWORD_REQUIREMENTS_MET_ICON = "https://assets.homedepot-static.com/single-signin-ui/v0.712.0/build/76972c85ea72c7b0fbda9184d5969470.svg";
 	public static final String CREATE_AN_ACCOUNT_PAGE_PASSWORD_STRENGTH_METER_VALUE_1 = "Strength: Poor";
 	public static final String CREATE_AN_ACCOUNT_PAGE_PASSWORD_STRENGTH_METER_VALUE_2 = "Strength: Fair";
 	public static final String CREATE_AN_ACCOUNT_PAGE_PASSWORD_STRENGTH_METER_VALUE_3 = "Strength: Good";

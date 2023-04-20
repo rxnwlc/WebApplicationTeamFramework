@@ -539,7 +539,7 @@ public class CreateAnAccountPageTest extends BaseTest{
 	@DataProvider
 	public Object[][] getBlank(){
 		return new Object[][] {
-			{" "}
+			{""}
 		};
 	}
 	
@@ -666,19 +666,19 @@ public class CreateAnAccountPageTest extends BaseTest{
 	
 	@Test(dataProvider = "getBlank")
 	public void professionalAccount_BlankCompanyNameTest(String companyName) {
-		String actualText = createAnAccountPage.getCompanyAddressErrorMessage(companyName);
+		String actualText = createAnAccountPage.getCompanyNameErrorMessage(companyName);
 		Assert.assertEquals(actualText, AppConstants.CREATE_AN_ACCOUNT_PAGE_PRO_XTRA_FORM_COMPANY_NAME_FIELD_ERROR_MESSAGE);
 	}
 	
 	@Test(dataProvider = "getBlank")
 	public void professionalAccount_BlankFirstNameTest(String firstName) {
-		String actualText = createAnAccountPage.getCompanyAddressErrorMessage(firstName);
+		String actualText = createAnAccountPage.getFirstNameErrorMessage(firstName);
 		Assert.assertEquals(actualText, AppConstants.CREATE_AN_ACCOUNT_PAGE_PRO_XTRA_FORM_NAME_FIELD_ERROR_MESSAGE);
 	}
 	
 	@Test(dataProvider = "getBlank")
 	public void professionalAccount_BlankLastNameTest(String lastName) {
-		String actualText = createAnAccountPage.getCompanyAddressErrorMessage(lastName);
+		String actualText = createAnAccountPage.getLastNameErrorMessage(lastName);
 		Assert.assertEquals(actualText, AppConstants.CREATE_AN_ACCOUNT_PAGE_PRO_XTRA_FORM_NAME_FIELD_ERROR_MESSAGE);
 	}
 	
@@ -916,44 +916,44 @@ public class CreateAnAccountPageTest extends BaseTest{
 //*****Fill Out Complete Form with Data********
 		
 		
-		@DataProvider
-		public Object[][] getPersonalFormTestData() {
-			return new Object[][] {
-				{"test@uat.com", "Pass-1234", 50309, "5551234567"},
-			};
-		}
+	@DataProvider
+	public Object[][] getPersonalFormTestData() {
+		return new Object[][] {
+			{"test@uat.com", "Pass-1234", 50309, "5551234567"},
+		};
+	}
 		
-		@Test(dataProvider = "getPersonalFormTestData")
-		public void personalAccount_EnterDataInFormFields_noCaptcha_Test(String emailAddress, String password, int zipCode, String phoneNumber) {
-			String actualText = createAnAccountPage.fillInPersonalForm(emailAddress, password, zipCode, phoneNumber);
-			Assert.assertEquals(actualText, AppConstants.CREATE_AN_ACCOUNT_PAGE_CAPTCHA_MESSAGE_VALUE);
-		}
+	@Test(dataProvider = "getPersonalFormTestData")
+	public void personalAccount_EnterDataInFormFields_noCaptcha_Test(String emailAddress, String password, int zipCode, String phoneNumber) {
+		String actualText = createAnAccountPage.fillInPersonalForm(emailAddress, password, zipCode, phoneNumber);
+		Assert.assertEquals(actualText, AppConstants.CREATE_AN_ACCOUNT_PAGE_CAPTCHA_MESSAGE_VALUE);
+	}
 		
-		@DataProvider
-		public Object[][] getProfessionalFormTestData1() {
-			return new Object[][] {
-				{"test@uat.com", "Pass-1234", "We can fix it", "Paisley", "Oliver", "5551234567", "123 Worker Way, Des Moines, IA 50313", "Handyperson"},
-			};
-		}
+	@DataProvider
+	public Object[][] getProfessionalFormTestData1() {
+		return new Object[][] {
+			{"test@uat.com", "Pass-1234", "We can fix it", "Paisley", "Oliver", "5551234567", "123 Worker Way, Des Moines, IA 50313", "Handyperson"},
+		};
+	}
 		
-		@Test(dataProvider = "getProfessionalFormTestData1")
-		public void professionalAccount_EnterDataInFormFields_noCaptcha_Test(String emailAddress, String password, String companyName, String firstName, String lastName, String phoneNumber, String companyAddress, String businessType) {
-			String actualText = createAnAccountPage.fillInProfessionalForm(emailAddress, password, companyName, firstName, lastName, phoneNumber, companyAddress, businessType);
-			Assert.assertEquals(actualText, AppConstants.CREATE_AN_ACCOUNT_PAGE_CAPTCHA_MESSAGE_VALUE);
-		}
+	@Test(dataProvider = "getProfessionalFormTestData1")
+	public void professionalAccount_EnterDataInFormFields_noCaptcha_Test(String emailAddress, String password, String companyName, String firstName, String lastName, String phoneNumber, String companyAddress, String businessType) {
+		String actualText = createAnAccountPage.fillInProfessionalForm(emailAddress, password, companyName, firstName, lastName, phoneNumber, companyAddress, businessType);
+		Assert.assertEquals(actualText, AppConstants.CREATE_AN_ACCOUNT_PAGE_CAPTCHA_MESSAGE_VALUE);
+	}
 		
-		@DataProvider
-		public Object[][] getProfessionalFormTestData2() {
-			return new Object[][] {
-				{"test@uat.com", "Pass-1234", "We can fix it", "Paisley", "Oliver", "5551234567", "123 Worker Way, Des Moines, IA 50313", "Unit 234k", "Handyperson"},
-			};
-		}
+	@DataProvider
+	public Object[][] getProfessionalFormTestData2() {
+		return new Object[][] {
+			{"test@uat.com", "Pass-1234", "We can fix it", "Paisley", "Oliver", "5551234567", "123 Worker Way, Des Moines, IA 50313", "Unit 234k", "Handyperson"},
+		};
+	}
 		
-		@Test(dataProvider = "getProfessionalFormTestData1")
-		public void professionalAccount_EnterDataInFormFields_noCaptcha_Test(String emailAddress, String password, String companyName, String firstName, String lastName, String phoneNumber, String companyAddress, String companyAddrssLn2, String businessType) {
-			String actualText = createAnAccountPage.fillInProfessionalFormWithAddressLine2(emailAddress, password, companyName, firstName, lastName, phoneNumber, companyAddress, companyAddrssLn2, businessType);
-			Assert.assertEquals(actualText, AppConstants.CREATE_AN_ACCOUNT_PAGE_CAPTCHA_MESSAGE_VALUE);
-		}
+	@Test(dataProvider = "getProfessionalFormTestData2")
+	public void professionalAccount_EnterDataInFormFields_noCaptcha_Test(String emailAddress, String password, String companyName, String firstName, String lastName, String phoneNumber, String companyAddress, String companyAddrssLn2, String businessType) {
+		String actualText = createAnAccountPage.fillInProfessionalFormWithAddressLine2(emailAddress, password, companyName, firstName, lastName, phoneNumber, companyAddress, companyAddrssLn2, businessType);
+		Assert.assertEquals(actualText, AppConstants.CREATE_AN_ACCOUNT_PAGE_CAPTCHA_MESSAGE_VALUE);
+	}
 		
 
 }

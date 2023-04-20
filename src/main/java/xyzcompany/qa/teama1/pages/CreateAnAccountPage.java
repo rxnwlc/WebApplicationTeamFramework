@@ -4,15 +4,9 @@ import java.util.List;
 
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-
 import xyzcompany.qa.coe_web.utils.ElementUtil;
 import xyzcompany.qa.coe_web.utils.JavaScriptUtil;
-import xyzcompany.qa.teama1.constants.AppConstants;
 import xyzcompany.qa.coe_web.constants.WaitConstants;
 
 
@@ -48,13 +42,13 @@ public class CreateAnAccountPage {
 	//Common Locators
 	private By formFields = By.xpath("(//form/div/label)");
 	private By emailField = By.id("email");
-	private By emailFieldErrorMessage = By.xpath("//span[@data-automation-id='registrationEmailErrorField']");
+	private By emailFieldErrorMessage = By.xpath("//span[contains(@data-automation-id,'EmailErrorField')]");
 	private By passwordField = By.id("password-input-field");
 	private By showPasswordLink = By.id("showPasswordCheck");
 	private By hidePasswordLink = By.id("showPasswordCheck");
-	private By passwordFieldErrorMessage = By.xpath("//span[@data-automation-id='registrationPasswordErrorField']");
-	private By phoneNumberField = By.id("phone");
-	private By phoneNumberFieldErrorMessage = By.xpath("//span[@data-automation-id='registrationPhoneErrorField']");
+	private By passwordFieldErrorMessage = By.xpath("//span[contains(@data-automation-id,'PasswordErrorField')]");
+	private By phoneNumberField = By.xpath("//input[contains(@id,'hone') and contains(@type,'text')]");
+	private By phoneNumberFieldErrorMessage = By.xpath("//span[contains(@data-automation-id,'PhoneErrorField')]");
 	private By checkBoxLabels = By.xpath("//div[contains(@class,'checkbox-btn')]/following-sibling::label");
 	private By keepMeSignedInCheckBox = By.xpath("//label[@for='kmsi-checkbox']");
 	private By keepMeSignedInToolTipIcon = By.className("kmsi-tooltip");
@@ -81,14 +75,11 @@ public class CreateAnAccountPage {
 	private By zipCodeField = By.id("zipCode");
 	private By zipCodeFieldErrorMessage = By.xpath("//span[@data-automation-id='registrationZipcodeErrorField']");
 	private By verifyPhoneNumberCheckBox = By.xpath("//label[@for='verify-phone-checkbox']");
-	private By personalAccountCreateBtn = By.xpath("//button[@data-automation-id='registrationCreateAnAccountButton']");
 	private By currentAccountHolderQuestion = By.xpath("//div[@class='col__12-12 u__text-align--center u--paddingNormal-vertical']");
 	private By signInLink = By.xpath("//span[@data-automation-id='registrationSignInButton']");
 	
 	
 	//ProXtra Account By Locators
-	 //private By proXtraLogo = By.xpath("//img[@data-automation-id='GenericHeaderHomeDepotLogo']");
-	 //private By proXtraHeader = By.xpath("//p[@data-automation-id='GenericHeaderHeader']");
 	 private By proXtraBenefitSectionHeader = By.xpath("//div[@data-automation-id='accountBenefits']/p[@class='u__bold u__text-align--left u__medium u--paddingSmall-bottom']");
 	 private By proXtraBenefitDescription = By.xpath("//div[@data-automation-id='accountBenefits']/p[@class='u--paddingSmall-bottom']");
 	 private By proXtraBenefitList = By.xpath("//div[@class='col__12-12 u--paddingNone-left']//p");
@@ -214,7 +205,7 @@ public class CreateAnAccountPage {
 	public List<String> getFormCheckBoxLabels() {
 		eleUtil.waitForElementsPresence(formFields, WaitConstants.DEFAULT_SHORT_TIME_OUT);
 		List<String> actualList = eleUtil.getElementsTextList(checkBoxLabels);
-		System.out.println(actualList);
+		//System.out.println(actualList);
 		eleUtil.doClick(backBtn);
 		return actualList;
 	}
@@ -275,7 +266,7 @@ public class CreateAnAccountPage {
 	public List<String> getLegalLinksText() {
 		eleUtil.waitForElementPresence(formFields, WaitConstants.DEFAULT_SHORT_TIME_OUT);
 		List<String> actualList = eleUtil.getElementsTextList(legalLinks);
-		System.out.println(actualList);
+		//System.out.println(actualList);
 		eleUtil.doClick(backBtn);
 		return actualList;
 	}
@@ -356,7 +347,7 @@ public class CreateAnAccountPage {
 		eleUtil.doClick(professionalAccountBtn);
 		eleUtil.waitForElementsPresence(formFields, WaitConstants.DEFAULT_SHORT_TIME_OUT);
 		List<String> actualList = eleUtil.getElementsTextList(proXtraBusinessDropdownOptions);
-		System.out.println(actualList);
+		//System.out.println(actualList);
 		eleUtil.doClick(backBtn);
 		return actualList;
 	}
@@ -371,7 +362,7 @@ public class CreateAnAccountPage {
 		eleUtil.doClick(professionalAccountBtn);
 		eleUtil.waitForElementsPresence(formFields, WaitConstants.DEFAULT_SHORT_TIME_OUT);
 		String actualHeader = eleUtil.doElementGetText(proXtraBenefitSectionHeader);
-		System.out.println(actualHeader);
+		//System.out.println(actualHeader);
 		eleUtil.doClick(backBtn);
 		return actualHeader;
 	}
@@ -380,7 +371,7 @@ public class CreateAnAccountPage {
 		eleUtil.doClick(professionalAccountBtn);
 		eleUtil.waitForElementsPresence(formFields, WaitConstants.DEFAULT_SHORT_TIME_OUT);
 		String actualText = eleUtil.doElementGetText(proXtraBenefitDescription);
-		System.out.println(actualText);
+		//System.out.println(actualText);
 		eleUtil.doClick(backBtn);
 		return actualText;
 	}
@@ -389,7 +380,7 @@ public class CreateAnAccountPage {
 		eleUtil.doClick(professionalAccountBtn);
 		eleUtil.waitForElementsPresence(formFields, WaitConstants.DEFAULT_SHORT_TIME_OUT);
 		List<String> actualList = eleUtil.getElementsTextList(proXtraBenefitList);
-		System.out.println(actualList);
+		//System.out.println(actualList);
 		eleUtil.doClick(backBtn);
 		return actualList;
 	}
@@ -509,8 +500,9 @@ public class CreateAnAccountPage {
 	public String getBusinessTypeErrorMessage() {
 		eleUtil.doClick(professionalAccountBtn);
 		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, proXtraBusinessDropdownField);
-		eleUtil.doClearData(proXtraBusinessDropdownField);
+		eleUtil.doSelectDropDownByValue(proXtraBusinessDropdownField, "DEFAULT");
 		eleUtil.doTabBySendKeys(proXtraBusinessDropdownField);
+		eleUtil.doClick(createAccountBtn);
 		String actualText =  eleUtil.doElementGetText(proXtraBusinessFieldErrorMessage);
 		eleUtil.doClick(backBtn);
 		return actualText;
@@ -671,15 +663,6 @@ public class CreateAnAccountPage {
 	
 	
 	
-//	public String getPasswordErrorMessage3(String password) {
-//		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, passwordField);
-//		eleUtil.doClearData(passwordField);
-//		eleUtil.doSendKeys(passwordField, password);
-//		eleUtil.doTabBySendKeys(passwordField);
-//		String actualText =  eleUtil.doElementGetText(passwordFieldErrorMessage);
-//		eleUtil.doClick(backBtn);
-//		return actualText;
-//	}
 
 
 }
