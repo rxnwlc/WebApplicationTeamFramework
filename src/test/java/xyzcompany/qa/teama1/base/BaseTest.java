@@ -11,6 +11,10 @@ import xyzcompany.qa.coe_web.factory.DriverFactory;
 import xyzcompany.qa.teama1.pages.CommonPageElements;
 import xyzcompany.qa.teama1.pages.CreateAnAccountPage;
 import xyzcompany.qa.teama1.pages.HomePage;
+import xyzcompany.qa.teama1.pages.MyAccountTermsAndConditionsPage;
+import xyzcompany.qa.teama1.pages.NoticeOfFinancialIncentivePage;
+import xyzcompany.qa.teama1.pages.PrivacyAndSecurityStatementPage;
+import xyzcompany.qa.teama1.pages.ProXtraTermsAndConditionsPage;
 
 
 public class BaseTest {
@@ -22,6 +26,10 @@ public class BaseTest {
 	protected CommonPageElements commonPageElements;
 	protected HomePage homePage;
 	protected CreateAnAccountPage createAnAccountPage;
+	protected ProXtraTermsAndConditionsPage proXtraTermsAndConditionsPage;
+	protected PrivacyAndSecurityStatementPage privacyAndSecurityStatementPage;
+	protected MyAccountTermsAndConditionsPage myAccountTermsAndConditionsPage;
+	protected NoticeOfFinancialIncentivePage noticeOfFinancialIncentivePage;
 	
 	@BeforeTest
 	public void setUp() {
@@ -31,6 +39,10 @@ public class BaseTest {
 		commonPageElements = new CommonPageElements(driver);
 		homePage = new HomePage(driver);
 		createAnAccountPage = new CreateAnAccountPage(driver);
+		proXtraTermsAndConditionsPage = new ProXtraTermsAndConditionsPage(driver);
+		privacyAndSecurityStatementPage = new PrivacyAndSecurityStatementPage(driver);
+		myAccountTermsAndConditionsPage = new MyAccountTermsAndConditionsPage(driver);
+		noticeOfFinancialIncentivePage = new NoticeOfFinancialIncentivePage(driver);
 		
 		softAssert = new SoftAssert();
 	}
