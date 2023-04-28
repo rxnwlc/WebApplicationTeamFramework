@@ -1,11 +1,10 @@
 package xyzcompany.qa.teama1.pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import xyzcompany.qa.coe_web.utils.ElementUtil;
 
-public class HomePage {
+public class ProfilePage {
 	
 	private WebDriver driver;
 	private ElementUtil eleUtil;
@@ -14,12 +13,9 @@ public class HomePage {
 	
 	
 	
-	public HomePage(WebDriver driver) {
+	public ProfilePage(WebDriver driver) {
 		this.driver = driver;
 		eleUtil = new ElementUtil(driver);
 	}
-	
-	
-	
 
 }

@@ -6,7 +6,6 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import xyzcompany.qa.coe_web.utils.ElementUtil;
-import xyzcompany.qa.coe_web.utils.JavaScriptUtil;
 import xyzcompany.qa.coe_web.constants.WaitConstants;
 
 
@@ -17,8 +16,7 @@ public class CreateAnAccountPage {
 	
 	private WebDriver driver;
 	private ElementUtil eleUtil;
-	private JavaScriptUtil jsUtil;
-	
+		
 	
 	
 	//By Locators
@@ -111,7 +109,6 @@ public class CreateAnAccountPage {
 	 public CreateAnAccountPage(WebDriver driver) {
 		this.driver = driver;
 		eleUtil = new ElementUtil(driver);
-		jsUtil = new JavaScriptUtil(driver);
 	}
 	
 //*****Select An Account Type Functions*****
@@ -652,14 +649,7 @@ public class CreateAnAccountPage {
 	
 	
 
-//	public String getPasswordErrorMessage1() {
-//		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, passwordField);
-//		eleUtil.doSendKeys(passwordField, "");
-//		eleUtil.doTabBySendKeys(passwordField);
-//		String actualText =  eleUtil.doElementGetText(passwordFieldErrorMessage);
-//		eleUtil.doClick(backBtn);
-//		return actualText;
-//	}
+
 	
 	
 	
