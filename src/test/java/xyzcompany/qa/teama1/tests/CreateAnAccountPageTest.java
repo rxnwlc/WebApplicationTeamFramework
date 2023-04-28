@@ -15,7 +15,8 @@ public class CreateAnAccountPageTest extends BaseTest{
 	
 	@BeforeClass
 	public void createAnAccountPageSetup() {
-		createAnAccountPage = homePage.startCreateAnAccount();
+		commonPageElements.topNavigation_openMyAccountPopUp();
+		createAnAccountPage = commonPageElements.myAccountPopUp_clickCreateAnAccountButton();
 	}
 	
 	
