@@ -15,8 +15,8 @@ public class ProXtraTermsAndConditionsPageTest extends BaseTest{
 	
 	@BeforeClass
 	public void createAnAccountPageSetup() {
-		createAnAccountPage = homePage.startCreateAnAccount();
-		createAnAccountPage.clickProfessionalAccountBtn();
+		commonPageElements.topNavigation_openMyAccountPopUp();
+		createAnAccountPage = commonPageElements.myAccountPopUp_clickCreateAnAccountButton();
 		proXtraTermsAndConditionsPage = createAnAccountPage.clickProXtraTermsAndConditionsLink();
 	}
 		

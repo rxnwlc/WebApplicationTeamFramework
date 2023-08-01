@@ -8,7 +8,7 @@
 		<dependency>
 			<groupId>CoreAutomationFramework</groupId>
 			<artifactId>WebApplicationFramework</artifactId>
-			<version>0.0.1-20230328.211410-1</version>
+			<version>0.0.1-20230713.231545-2</version>
 		</dependency>
 
 	</dependencies>

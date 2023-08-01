@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="Team A1 Test Regression Suite" thread-count="4"
+	parallel="tests" verbose="4">
+
+
+	<listeners>
+		 <listener class-name="xyzcompany.qa.coe_web.listeners.ExtentReportListener"/> 
+		<listener
+			class-name="xyzcompany.qa.coe_web.listeners.TestAllureListener" />
+
+		<!-- <listener class-name="xyzcompany.qa.coe_web.listeners.AnnotationTransformer" 
+			/> -->
+	</listeners>
+
+	<test name="Create An Account Page Test_chrome">
+		<parameter name="browser" value="chrome" />
+		<parameter name="browserversion" value="90.0" />
+		<parameter name="testcasename" value="Create An Account Page Test" />
+		<classes>
+			<class name="xyzcompany.qa.teama1.tests.CreateAnAccountPageTest"/>
+		</classes>
+	</test>
+
+
+	<test name="Home Page Test_chrome">
+		<parameter name="browser" value="chrome" />
+		<parameter name="browserversion" value="112.0" />
+		<parameter name="testcasename" value="Home Page Test" />
+		<classes>
+			<class name="xyzcompany.qa.teama1.tests.HomePageTest"/>
+		</classes>
+	</test>
+
+
+	<test name="ProXtra Terms And Conditions Page Test_chrome">
+		<parameter name="browser" value="chrome" />
+		<parameter name="browserversion" value="90.0" />
+		<parameter name="testcasename" value="ProXtra Terms And Conditions Page Test" />
+		<classes>
+			<class name="xyzcompany.qa.teama1.tests.ProXtraTermsAndConditionsPageTest"/>
+		</classes>
+	</test>
+	
+	
+	
+</suite>	

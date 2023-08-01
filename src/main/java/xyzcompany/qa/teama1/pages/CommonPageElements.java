@@ -1,9 +1,12 @@
 package xyzcompany.qa.teama1.pages;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
+
 
 import xyzcompany.qa.coe_web.constants.WaitConstants;
 import xyzcompany.qa.coe_web.utils.ElementUtil;
@@ -25,7 +28,7 @@ public class CommonPageElements {
 	private By trackOrderLink = By.linkText("Track Order");
 	private By helpLink = By.linkText("Help");
 	private By topNavLogoImage = By.xpath("//*[local-name()='svg' and @class='HeaderLogo']");
-	private By topNavMyStoreInfo = By.xpath("//div[@id='myStore']//div");
+	private By topNavMyStoreInfo = By.xpath("//span[@class='MyStore__label']/div");
 	private By topNavMyStoreDownCaret = By.xpath("//*[local-name()='svg' and @class='caret__myStore']");
 	private By topNavMyStoreUpCaret = By.xpath("//*[local-name()='svg' and @class='caret__myStore caret__open']");
 	private By myStoreTool = By.id("myStoreDropdown");
@@ -75,10 +78,10 @@ public class CommonPageElements {
 	private By topNavAllDepartmentsLink = By.linkText("All Departments");
 	private By topNavHomeDecorFurnitureLink = By.linkText("Home Decor, Furniture & Kitchenware");
 	private By topNavDIYProjectsAndIdeasLink = By.linkText("DIY Projects & Ideas");
-	private By topNavProjectCalculators = By.linkText("Project Calculators");
-	private By topNavInstallationAndServices = By.linkText("Installation & Services");
-	private By topNavSpecialsAndOffers = By.linkText("Specials & Offers");
-	private By topNavLocalAdAndCatalog = By.linkText("Local Ad & Catalog");
+	private By topNavProjectCalculatorsLink = By.linkText("Project Calculators");
+	private By topNavInstallationAndServicesLink = By.linkText("Installation & Services");
+	private By topNavSpecialsAndOffersLink = By.linkText("Specials & Offers");
+	private By topNavLocalAdAndCatalogLink = By.linkText("Local Ad & Catalog");
 	
 	private By allDepartments_Level1Links = By.xpath("//section[@class='MainFlyout__level1']//li");
 	private By allDepartments_Level2Header = By.xpath("//section[@class='MainFlyout__level2']//header");
@@ -132,6 +135,8 @@ public class CommonPageElements {
 		System.out.println(pageName + " page url is: " + url);
 		return url;
 	}
+	
+	//Header Elements
 	
 	public String getMessageBarText() {
 		return eleUtil.doElementGetText(messageBar);
@@ -215,6 +220,17 @@ public class CommonPageElements {
 		return eleUtil.getElementsTextList(topNavDeliverZip);
 	}
 	
+	public String topNavigation_getDeliveryZipCode() {
+		try {
+			eleUtil.waitForElementVisible(topNavDeliverZip, WaitConstants.DEFAULT_LONG_TIME_OUT);
+			return eleUtil.doElementGetText(topNavDeliveryZipCode);
+		}catch(StaleElementReferenceException e){
+			driver.findElement(topNavDeliverZip);
+			driver.findElement(topNavDeliveryZipCode);
+			return topNavigation_getDeliveryZipCode();
+		}
+	}
+	
 	public boolean topNavigation_openDeliveryZipCodePopUp() {
 		eleUtil.doClick(topNavDeliveryZipCodeDownCaret);
 		return eleUtil.doElementIsDisplayed(deliveryZipTool);
@@ -232,14 +248,21 @@ public class CommonPageElements {
 		return eleUtil.getElementAttribute(deliveryZipTool_ZipCodeField, "placeholder");
 	}
 	
-	public String deliveryZipCodePopUp_clickUpdateBtn() {
-		eleUtil.doClick(deliveryZipTool_UpdateBtn);
-		if(eleUtil.doElementIsDisplayed(deliveryZipTool_InputErrorMsg)) {
-			return eleUtil.doElementGetText(deliveryZipTool_InputErrorMsg);
-		}else {
-			return eleUtil.doElementGetText(topNavDeliveryZipCode);
+	public String deliveryZipCodePopUp_inputErrorMessage(){
+		try {
+			eleUtil.waitForElementVisible(deliveryZipTool_InputErrorMsg, WaitConstants.DEFAULT_SHORT_TIME_OUT);
+			String errorMessage = eleUtil.doElementGetText(deliveryZipTool_InputErrorMsg);
+			System.out.println(errorMessage);
+			return errorMessage;
+		}catch(StaleElementReferenceException e) {
+			driver.findElement(deliveryZipTool_InputErrorMsg);
+			return deliveryZipCodePopUp_inputErrorMessage();
 		}
 	}
+		
+	public void deliveryZipCodePopUp_clickUpdateButton() {
+		eleUtil.doClick(deliveryZipTool_UpdateBtn);
+		}
 	
 	public String deliveryZipCodePopUp_bottomMessage() {
 		return eleUtil.doElementGetText(deliveryZipTool_Message);
@@ -255,9 +278,14 @@ public class CommonPageElements {
 		return eleUtil.doElementIsDisplayed(deliveryZipTool);
 	}
 	
-	public List<String> topNavigation_enterProduct(String searchItem) {
+	public List<String> topNavigation_enterProductInSearchField(String searchItem) {
 		eleUtil.doSendKeys(topNavSearchField, searchItem);
-		return eleUtil.getElementsTextList(topNavSearchField);
+		eleUtil.doClick(topNavSearchField);
+		eleUtil.waitForElementVisible(topNavSearchSuggestionField, WaitConstants.DEFAULT_MEDIUM_TIME_OUT);
+		List<String> actualList = eleUtil.getElementsTextList(topNavSearchSuggestList);
+		System.out.println(actualList);
+		return actualList;
+		
 	}
 	
 	public SearchResultsPage topNavigation_selectProduct(String selectItem) {
@@ -269,8 +297,6 @@ public class CommonPageElements {
 		eleUtil.doClick(topNavSearchBtn);
 		return new SearchResultsPage(driver);
 	}
-	
-	//****************************************************************************************************
 	
 	public List<String> topNavigation_getMyAccountLabels() {
 		return eleUtil.getElementsTextList(topNavMyAccountLabels);
@@ -383,6 +409,120 @@ public class CommonPageElements {
 	public YourCartPage topNavigation_clickCartLink() {
 		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, topNavMyCartLink);
 		return new YourCartPage(driver);
+	}
+	
+	public List<String> topNavigation_getShoppingLinks() {
+		return eleUtil.getElementsTextList(topNavShoppingLinks);
+	}
+	//***************************************************************************************************
+	public void shoppingLink_hoverOverAllDepartments() {
+		eleUtil.mouseHover(topNavAllDepartmentsLink);
+	}
+	
+	public List<String> allDepartments_getDepartmentNamesList() {
+		shoppingLink_hoverOverAllDepartments();
+		List<String> allDepartmentNames = eleUtil.getElementsTextList(allDepartments_Level1Links);
+		return allDepartmentNames;
+	}
+	public List<String> allDepartments_getDepartmentItemsList() {
+		shoppingLink_hoverOverAllDepartments();
+		List<String> allDepartmentNames = eleUtil.getElementsTextList(allDepartments_Level1Links);
+		List<String> departmentsAndItems = new ArrayList<String>();
+		for(String item : allDepartmentNames) {
+			shoppingLink_hoverOverAllDepartments();
+			eleUtil.waitForElementPresence(allDepartments_Level1Links, WaitConstants.DEFAULT_MEDIUM_TIME_OUT);
+			eleUtil.mouseHover(By.xpath("//div[@id='allDepartmentsFlyout']//a[text()='" + item + "']"));
+			String headerText = eleUtil.doElementGetText(allDepartments_Level2Header);
+			List<String> items = eleUtil.getElementsTextList(allDepartments_Level2Links);
+			departmentsAndItems.add(headerText);
+			departmentsAndItems.addAll(items);
+		}
+		return departmentsAndItems;
+	}
+	
+
+	
+	public List<String> allDepartments_getDepartmentItemsSpecificTypesList() {
+	    List<String> allDepartmentNames = allDepartments_getDepartmentNamesList();
+	    List<String> itemsSpecificTypes = new ArrayList<String>();
+	    for(String item : allDepartmentNames) {
+	        eleUtil.waitForElementPresence(allDepartments_Level1Links, WaitConstants.DEFAULT_MEDIUM_TIME_OUT);
+	        eleUtil.mouseHover(By.xpath("//div[@id='allDepartmentsFlyout']//a[text()='" + item + "']"));
+	        List<String> items = eleUtil.getElementsTextList(allDepartments_Level2Links);
+	        for(String type : items) {
+	        	eleUtil.waitForElementPresence(allDepartments_Level2Links, WaitConstants.DEFAULT_MEDIUM_TIME_OUT);
+	            eleUtil.mouseHover(By.xpath("//section[@class='MainFlyout__level2']//a[translate(text(),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')='" + type.toLowerCase() + "']"));
+	            //String headerText = eleUtil.doElementGetText(allDepartments_Level3Header);
+	            List<String> types = eleUtil.getElementsTextList(allDepartments_Level3Links);
+	            //itemsSpecificTypes.add(headerText);
+	            itemsSpecificTypes.addAll(types);
+	            shoppingLink_hoverOverAllDepartments();
+	            eleUtil.mouseHover(By.xpath("//div[@id='allDepartmentsFlyout']//a[text()= '" + item + "']"));
+	            System.out.println(itemsSpecificTypes);
+	       }
+	    }
+	    return itemsSpecificTypes;
+	}
+	
+//	public List<String> allDepartments_getDepartmentItemsSpecificTypesList() {
+//	    List<String> allDepartmentNames = allDepartments_getDepartmentItemsList();
+//	    List<String> itemSpecificTypes = new ArrayList<>();
+//
+//	    for (String departmentName : allDepartmentNames) {
+//	        WebElement departmentLink = eleUtil.getElement(By.xpath("//a[text()='" + departmentName + "']"));
+//	        eleUtil.mouseHover(By.xpath("//a[text()='" + departmentName + "']"));
+//
+//	        WebElement departmentMenu = eleUtil.getElement(By.xpath("//div[@aria-label='" + departmentName + "']"));
+//	        eleUtil.waitForElementsPresence(allDepartments_Level2Links, WaitConstants.DEFAULT_MEDIUM_TIME_OUT);
+//	        List<String> departmentItems = eleUtil.getElementsTextList(allDepartments_Level2Links);
+//
+//	        for (String departmentItem : departmentItems) {
+//	            WebElement departmentItemLink = eleUtil.getElement(By.xpath("//a[text()='" + departmentItem + "']"));
+//	            eleUtil.mouseHover(By.xpath("//a[text()='" + departmentItem + "']"));
+//
+//	            if (eleUtil.doElementIsDisplayed(allDepartments_Level3Header)) {
+//	                List<String> specificTypes = eleUtil.getElementsTextList(allDepartments_Level3Links);
+//	                itemSpecificTypes.addAll(specificTypes);
+//	            }
+//
+//	            eleUtil.mouseHover(By.xpath("//a[text()='" + departmentName + "']"));
+//	            eleUtil.mouseHover(By.xpath("//div[@aria-label='" + departmentName + "']"));
+//	        }
+//	    }
+//
+//	    return itemSpecificTypes;
+//	}
+
+
+	
+	
+	public void shoppingLink_hoverOverHomeDecorFurnitureAndKitchenware() {
+		eleUtil.mouseHover(topNavHomeDecorFurnitureLink);
+	}
+	
+	public void shoppingLink_hoverOverDIYProjectsAndIdeas() {
+		eleUtil.mouseHover(topNavDIYProjectsAndIdeasLink);
+	}
+	
+	public void shoppingLink_hoverOverInstallationAndServices() {
+		eleUtil.mouseHover(topNavInstallationAndServicesLink);
+	}
+	
+	public void shoppingLink_hoverOverSpecialsAndOffers() {
+		eleUtil.mouseHover(topNavSpecialsAndOffersLink);
+	}
+	
+	public void shoppingLink_clickProjectCalculators() {
+		eleUtil.doClick(topNavProjectCalculatorsLink);
+	}
+	
+	public void shoppingLink_clickLocalAdAndCatalog() {
+		eleUtil.doClick(topNavLocalAdAndCatalogLink);
+	}
+
+	public void deliveryZipCodePopUp_errorMessage() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

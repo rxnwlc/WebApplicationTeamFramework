@@ -24,7 +24,6 @@ public class BaseTest {
 	protected Properties prop;
 	protected SoftAssert softAssert;
 	protected CommonPageElements commonPageElements;
-	protected HomePage homePage;
 	protected CreateAnAccountPage createAnAccountPage;
 	protected ProXtraTermsAndConditionsPage proXtraTermsAndConditionsPage;
 	protected PrivacyAndSecurityStatementPage privacyAndSecurityStatementPage;
@@ -37,7 +36,6 @@ public class BaseTest {
 		prop = df.initProp();
 		driver = df.initDriver(prop);
 		commonPageElements = new CommonPageElements(driver);
-		homePage = new HomePage(driver);
 		createAnAccountPage = new CreateAnAccountPage(driver);
 		proXtraTermsAndConditionsPage = new ProXtraTermsAndConditionsPage(driver);
 		privacyAndSecurityStatementPage = new PrivacyAndSecurityStatementPage(driver);

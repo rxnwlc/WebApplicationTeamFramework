@@ -5,7 +5,10 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
 import xyzcompany.qa.coe_web.utils.ElementUtil;
+import xyzcompany.qa.coe_web.utils.JavaScriptUtil;
 import xyzcompany.qa.coe_web.constants.WaitConstants;
 
 
@@ -16,6 +19,7 @@ public class CreateAnAccountPage {
 	
 	private WebDriver driver;
 	private ElementUtil eleUtil;
+	private JavaScriptUtil jsUtil;
 		
 	
 	
@@ -42,8 +46,8 @@ public class CreateAnAccountPage {
 	private By emailField = By.id("email");
 	private By emailFieldErrorMessage = By.xpath("//span[contains(@data-automation-id,'EmailErrorField')]");
 	private By passwordField = By.id("password-input-field");
-	private By showPasswordLink = By.id("showPasswordCheck");
-	private By hidePasswordLink = By.id("showPasswordCheck");
+	private By showPasswordLink = By.xpath("//label[contains(@data-automation-id, 'registrationPswShowBtn')]");
+	private By hidePasswordLink = By.xpath("//label[contains(@data-automation-id, 'registrationPswHideBtn')]");
 	private By passwordFieldErrorMessage = By.xpath("//span[contains(@data-automation-id,'PasswordErrorField')]");
 	private By phoneNumberField = By.xpath("//input[contains(@id,'hone') and contains(@type,'text')]");
 	private By phoneNumberFieldErrorMessage = By.xpath("//span[contains(@data-automation-id,'PhoneErrorField')]");
@@ -109,6 +113,7 @@ public class CreateAnAccountPage {
 	 public CreateAnAccountPage(WebDriver driver) {
 		this.driver = driver;
 		eleUtil = new ElementUtil(driver);
+		jsUtil = new JavaScriptUtil(driver);
 	}
 	
 //*****Select An Account Type Functions*****
@@ -508,22 +513,27 @@ public class CreateAnAccountPage {
 	
 	
 	public String clickShowPasswordLink(String password) {
+		WebElement showPassword = driver.findElement(showPasswordLink);
 		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, passwordField);
 		eleUtil.doClearData(passwordField);
 		eleUtil.doSendKeys(passwordField, password);
-		eleUtil.doClick(showPasswordLink);
-		String actualText =  eleUtil.doElementGetText(showPasswordLink);
+		jsUtil.clickElementByJS(showPassword);
+		eleUtil.doElementIsDisplayed(hidePasswordLink);
+		String actualText =  eleUtil.doElementGetText(hidePasswordLink);
 		eleUtil.doClick(backBtn);
 		return actualText;
 	}
 	
 	public String clickHidePasswordLink(String password) {
+		WebElement showPassword = driver.findElement(showPasswordLink);
+		
 		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, passwordField);
 		eleUtil.doClearData(passwordField);
 		eleUtil.doSendKeys(passwordField, password);
-		eleUtil.doClick(showPasswordLink);
-		eleUtil.doClick(hidePasswordLink);
-		String actualText =  eleUtil.doElementGetText(hidePasswordLink);
+		jsUtil.clickElementByJS(showPassword);
+		WebElement hidePassword = driver.findElement(hidePasswordLink);
+		jsUtil.clickElementByJS(hidePassword);
+		String actualText =  eleUtil.doElementGetText(showPasswordLink);
 		eleUtil.doClick(backBtn);
 		return actualText;
 	}
