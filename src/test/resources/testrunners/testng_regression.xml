@@ -24,16 +24,6 @@
 	</test>
 
 
-	<test name="Home Page Test_chrome">
-		<parameter name="browser" value="chrome" />
-		<parameter name="browserversion" value="112.0" />
-		<parameter name="testcasename" value="Home Page Test" />
-		<classes>
-			<class name="xyzcompany.qa.teama1.tests.HomePageTest"/>
-		</classes>
-	</test>
-
-
 	<test name="ProXtra Terms And Conditions Page Test_chrome">
 		<parameter name="browser" value="chrome" />
 		<parameter name="browserversion" value="90.0" />

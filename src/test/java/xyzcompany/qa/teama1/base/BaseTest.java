@@ -10,7 +10,6 @@ import org.testng.asserts.SoftAssert;
 import xyzcompany.qa.coe_web.factory.DriverFactory;
 import xyzcompany.qa.teama1.pages.CommonPageElements;
 import xyzcompany.qa.teama1.pages.CreateAnAccountPage;
-import xyzcompany.qa.teama1.pages.HomePage;
 import xyzcompany.qa.teama1.pages.MyAccountTermsAndConditionsPage;
 import xyzcompany.qa.teama1.pages.NoticeOfFinancialIncentivePage;
 import xyzcompany.qa.teama1.pages.PrivacyAndSecurityStatementPage;
