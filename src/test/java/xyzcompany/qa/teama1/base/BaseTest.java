@@ -42,6 +42,8 @@ public class BaseTest {
 		noticeOfFinancialIncentivePage = new NoticeOfFinancialIncentivePage(driver);
 		
 		softAssert = new SoftAssert();
+		
+		
 	}
 	
 	@AfterTest

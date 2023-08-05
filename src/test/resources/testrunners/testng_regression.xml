@@ -16,17 +16,19 @@
 
 	<test name="Create An Account Page Test_chrome">
 		<parameter name="browser" value="chrome" />
-		<parameter name="browserversion" value="90.0" />
+		<parameter name="browserversion" value="114.0" />
 		<parameter name="testcasename" value="Create An Account Page Test" />
 		<classes>
-			<class name="xyzcompany.qa.teama1.tests.CreateAnAccountPageTest"/>
+			<class name="xyzcompany.qa.teama1.tests.CreateAnAccountTypeTest"/>
+			<class name="xyzcompany.qa.teama1.tests.CreateAPersonalAccountTest"/>
+			<class name="xyzcompany.qa.teama1.tests.CreateAProfessionalAccountTest"/>
 		</classes>
 	</test>
 
 
 	<test name="ProXtra Terms And Conditions Page Test_chrome">
 		<parameter name="browser" value="chrome" />
-		<parameter name="browserversion" value="90.0" />
+		<parameter name="browserversion" value="111.0" />
 		<parameter name="testcasename" value="ProXtra Terms And Conditions Page Test" />
 		<classes>
 			<class name="xyzcompany.qa.teama1.tests.ProXtraTermsAndConditionsPageTest"/>

@@ -74,15 +74,15 @@ public class ProXtraTermsAndConditionsPage {
 	}
 	
 	public String getSectionIIText() {
-		return eleUtil.doElementGetText(sectionIIText);
+		return eleUtil.doElementGetText(sectionIIText).replaceAll("[\\[\\]]", "");
 	}
 	
 	public String getSectionIIIHeader() {
 		return eleUtil.doElementGetText(sectionIIIHeader);
 	}
 		
-	public List<String> getSectionIIIText() {
-		return eleUtil.getElementsTextList(sectionIIIText);
+	public String getSectionIIIText() {
+		return eleUtil.getElementsTextList(sectionIIIText).toString().replaceAll("[\\[\\]]", "");
 	}
 	
 	public String getSectionIVHeader() {
@@ -98,7 +98,7 @@ public class ProXtraTermsAndConditionsPage {
 	}
 	
 	public String getSectionVText() {
-		return eleUtil.doElementGetText(sectionVText);
+		return eleUtil.doElementGetText(sectionVText).replaceAll("[\\[\\]]", "");
 	}
 	
 	public boolean isTierTableImageDisplayed() {

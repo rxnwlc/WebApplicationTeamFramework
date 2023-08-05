@@ -17,6 +17,7 @@ public class ProXtraTermsAndConditionsPageTest extends BaseTest{
 	public void createAnAccountPageSetup() {
 		commonPageElements.topNavigation_openMyAccountPopUp();
 		createAnAccountPage = commonPageElements.myAccountPopUp_clickCreateAnAccountButton();
+		createAnAccountPage.clickProfessionalAccountBtn();
 		proXtraTermsAndConditionsPage = createAnAccountPage.clickProXtraTermsAndConditionsLink();
 	}
 		
@@ -78,7 +79,7 @@ public class ProXtraTermsAndConditionsPageTest extends BaseTest{
 	
 	@Test
 	public void sectionIIITextTest() {
-		List<String> actualText = proXtraTermsAndConditionsPage.getSectionIIIText();
+		String actualText = proXtraTermsAndConditionsPage.getSectionIIIText();
 		Assert.assertEquals(actualText, AppConstants.PRO_XTRA_TERMS_AND_CONDITIONS_PAGE_SECTION_III_VALUE);
 		//System.out.println(actualText);
 	}

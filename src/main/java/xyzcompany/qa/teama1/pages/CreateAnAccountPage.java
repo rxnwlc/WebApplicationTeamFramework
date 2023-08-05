@@ -96,7 +96,10 @@ public class CreateAnAccountPage {
 	 private By companyAddressLine1Field = By.id("proAddress");
 	 private By companyAddressFieldErrorMessage = By.xpath("//span[@data-automation-id='proRegistrationProAddressErrorField']");
 	 private By addCompanyAddressLine2Link = By.id("renderAddressLine2Link");
-	 private By companyAddrLine2Field = By.id("addr2_optional");
+	 private By companyAddressLine2Field = By.id("addr2_optional");
+	 private By companyZipCode = By.id("proZipCode");
+	 private By companyZipCodeErrorMessage = By.xpath("//span[@data-automation-id='proRegistrationProZipCodeErrorField']");
+	 private By companyCityStateField = By.className("col__6-12");
 	 private By proXtraBusinessDropdownLabel = By.className("drop-down__label");
 	 private By proXtraBusinessDropdownField = By.className("drop-down__select");
 	 private By proXtraBusinessDropdownDefaultValue = By.xpath("//select[@class='drop-down__select']/option[@value='DEFAULT']");
@@ -105,9 +108,17 @@ public class CreateAnAccountPage {
 	 private By noticeOfFinancialIncentiveLink = By.linkText("Notice of Financial Incentive");
 	 private By proXtraPasswordRequirements = By.xpath("//span[@data-automation-id='registrationPasswordErrorField']/following-sibling::div");
 
+	 //Sign In Form By Locators
 	 private By signInFormMessage = By.className("u--paddingNormal-bottom");
 	
-	
+	 //Successful Registration By Locators
+	 private By registrationSuccessHeader = By.xpath("//p[@data-automation-id='subscriptionHeader']");
+	 private By chooseSubscriptionsHeader = By.className("spsi-h2");
+	 private By chooseSubscriptionsMessage = By.xpath("//h2[@class='u--marginNormal-bottom spsi-h2']/following-sibling::p");
+	 private By chooseSubscriptionsList = By.xpath("//label[@class='checkbox-content']");
+	 private By chooseSubscriptionsButtons = By.xpath("//form//button");
+	 private By chooseSubscriptionsSubscribeBtn = By.xpath("(//form//button)[1]");
+	 private By chooseSubscriptionsSkipBtn = By.xpath("(//form//button)[2]");
 	
 	//constructor
 	 public CreateAnAccountPage(WebDriver driver) {
@@ -150,9 +161,7 @@ public class CreateAnAccountPage {
 	}
 	
 	public List<String> getPersonalIncentiveList() {
-		List<String> actualList = eleUtil.getElementsTextList(personalIncentiveList);
-		//System.out.println(actualList);
-		return actualList;
+		return eleUtil.getElementsTextList(personalIncentiveList);
 	}
 	
 	public String getPersonalSectionButtonText() {
@@ -172,9 +181,7 @@ public class CreateAnAccountPage {
 	}
 	
 	public List<String> getProfessionalIncentiveList() {
-		List<String> actualList = eleUtil.getElementsTextList(professionalIncentiveList);
-		//System.out.println(actualList);
-		return actualList;
+		return eleUtil.getElementsTextList(professionalIncentiveList);
 	}
 	
 	public String getProfessionalSectionButtonText() {
@@ -191,93 +198,65 @@ public class CreateAnAccountPage {
 	
 	public int getTotalFormFields() {
 		eleUtil.waitForElementsPresence(formFields, WaitConstants.DEFAULT_SHORT_TIME_OUT);
-		int totalFields = eleUtil.getTotalElementsCount(formFields);
-		eleUtil.doClick(backBtn);
-		return totalFields;
+		return eleUtil.getTotalElementsCount(formFields);
 	}
 	
 	public List<String> getFormFieldLabels() {
 		eleUtil.waitForElementsPresence(formFields, WaitConstants.DEFAULT_SHORT_TIME_OUT);
-		List<String> actualList = eleUtil.getElementsTextList(formFields);
-		//System.out.println(actualList);
-		eleUtil.doClick(backBtn);
-		return actualList;
+		return eleUtil.getElementsTextList(formFields);
 	}
 	
 	public List<String> getFormCheckBoxLabels() {
 		eleUtil.waitForElementsPresence(formFields, WaitConstants.DEFAULT_SHORT_TIME_OUT);
-		List<String> actualList = eleUtil.getElementsTextList(checkBoxLabels);
-		//System.out.println(actualList);
-		eleUtil.doClick(backBtn);
-		return actualList;
+		return eleUtil.getElementsTextList(checkBoxLabels);
 	}
 	
 	public boolean doesKeepMeSignedInToolTipIconExist() {
 		eleUtil.waitForElementPresence(formFields, WaitConstants.DEFAULT_SHORT_TIME_OUT);
-		boolean iconFlag =  eleUtil.doElementIsDisplayed(keepMeSignedInToolTipIcon);
-		eleUtil.doClick(backBtn);
-		return iconFlag;
+		return  eleUtil.doElementIsDisplayed(keepMeSignedInToolTipIcon);
 	}
 	
 	public String getKeepMeSignedInToolTipText() {
 		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, keepMeSignedInToolTipIcon);
 		String actualText = eleUtil.doElementGetText(keepMeSignedInToolTipText);
 		eleUtil.doClick(keepMeSignedInToolTipCloseBtn);
-		eleUtil.doClick(backBtn);
 		return actualText;
 	}
 	public String getAccountCreationButtonText() {
 		eleUtil.waitForElementPresence(formFields, WaitConstants.DEFAULT_SHORT_TIME_OUT);
-		String actualText = eleUtil.doElementGetText(createAccountBtn);
-		eleUtil.doClick(backBtn);
-		return actualText;
+		return eleUtil.doElementGetText(createAccountBtn);
 	}
 	
 	public String getCurrentAccountHolderQuestionText() {
-		eleUtil.doClick(personalAccountBtn);
 		eleUtil.waitForElementPresence(formFields, WaitConstants.DEFAULT_SHORT_TIME_OUT);
-		String actualText = eleUtil.doElementGetText(currentAccountHolderQuestion);
-		eleUtil.doClick(backBtn);
-		return actualText;
+		return eleUtil.doElementGetText(currentAccountHolderQuestion);
 	}
 	
 	public boolean doesSignInLinkExist() {
-		eleUtil.doClick(personalAccountBtn);
 		eleUtil.waitForElementPresence(formFields, WaitConstants.DEFAULT_SHORT_TIME_OUT);
-		boolean signInLinkFlag = eleUtil.doElementIsDisplayed(signInLink);
-		eleUtil.doClick(backBtn);
-		return signInLinkFlag;
+		return eleUtil.doElementIsDisplayed(signInLink);
 	}
 	
 	public String clickSignInLink() {
-		eleUtil.doClick(personalAccountBtn);
 		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, signInLink);
 		String actualText = eleUtil.doElementGetText(signInFormMessage);
-		eleUtil.doClick(backBtn);
 		eleUtil.doClick(backBtn);
 		return actualText;
 	}
 	
 	public int getLegalLinksCount() {
 		eleUtil.waitForElementPresence(formFields, WaitConstants.DEFAULT_SHORT_TIME_OUT);
-		int linksCount = eleUtil.getElements(legalLinks).size();
-		eleUtil.doClick(backBtn);
-		return linksCount;
+		return eleUtil.getElements(legalLinks).size();
 	}
 	
 	public List<String> getLegalLinksText() {
 		eleUtil.waitForElementPresence(formFields, WaitConstants.DEFAULT_SHORT_TIME_OUT);
-		List<String> actualList = eleUtil.getElementsTextList(legalLinks);
-		//System.out.println(actualList);
-		eleUtil.doClick(backBtn);
-		return actualList;
+		return eleUtil.getElementsTextList(legalLinks);
 	}
 		
 	public List<String> getLegalLinksSectionText() {
 		eleUtil.waitForElementsPresence(checkBoxLabels, WaitConstants.DEFAULT_SHORT_TIME_OUT);
-		List<String> actualList = eleUtil.getElementsTextList(legalLinksText);
-		eleUtil.doClick(backBtn);
-		return actualList;
+		return eleUtil.getElementsTextList(legalLinksText);
 	}
 
 	public ProXtraTermsAndConditionsPage clickProXtraTermsAndConditionsLink() {
@@ -307,51 +286,43 @@ public class CreateAnAccountPage {
 	}
 	
 	public boolean clickAddCompanyAddressLine2Link() {
-		eleUtil.doClick(professionalAccountBtn);
-		eleUtil.waitForElementsPresence(formFields, WaitConstants.DEFAULT_SHORT_TIME_OUT);
 		eleUtil.doClick(addCompanyAddressLine2Link);
-		return eleUtil.doElementIsDisplayed(companyAddrLine2Field);
+		return eleUtil.doElementIsDisplayed(companyAddressLine2Field);
 	}
 	
 	public boolean doesCompanyAddressToolTipIconExist() {
-		eleUtil.doClick(professionalAccountBtn);
-		eleUtil.waitForElementPresence(formFields, WaitConstants.DEFAULT_SHORT_TIME_OUT);
-		boolean iconFlag =  eleUtil.doElementIsDisplayed(companyAddressToolTipIcon);
-		eleUtil.doClick(backBtn);
-		return iconFlag;
+		return  eleUtil.doElementIsDisplayed(companyAddressToolTipIcon);
 	}
 	
 	public String getCompanyAddressToolTipText() {
-		eleUtil.doClick(professionalAccountBtn);
 		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, companyAddressToolTipIcon);
-		String actualText = eleUtil.doElementGetText(companyAddressToolTipText);
-		eleUtil.doClick(backBtn);
-		return actualText;
+		return eleUtil.doElementGetText(companyAddressToolTipText);
 	}
 	
 	public String getBusinessTypeFieldLabel() {
-		eleUtil.doClick(professionalAccountBtn);
-		eleUtil.waitForElementPresence(formFields, WaitConstants.DEFAULT_SHORT_TIME_OUT);
-		String actualText = eleUtil.doElementGetText(proXtraBusinessDropdownLabel);
-		eleUtil.doClick(backBtn);
-		return actualText;
+		return eleUtil.doElementGetText(proXtraBusinessDropdownLabel);
 	}
 	
 	public String getBusinessTypeFieldDefault() {
-		eleUtil.doClick(professionalAccountBtn);
-		eleUtil.waitForElementPresence(formFields, WaitConstants.DEFAULT_SHORT_TIME_OUT);
-		String actualText = eleUtil.doElementGetText(proXtraBusinessDropdownDefaultValue);
-		eleUtil.doClick(backBtn);
-		return actualText;
+		return eleUtil.doElementGetText(proXtraBusinessDropdownDefaultValue);
+	}
+	
+	public boolean doesZipCodeFieldExist(String companyAddress) {
+		eleUtil.doClearData(companyAddressLine1Field);
+		eleUtil.doSendKeys(companyAddressLine1Field, companyAddress);
+		return eleUtil.doElementIsDisplayed(companyZipCode);
+	}
+		
+	public boolean doesCityStateFieldExist(String companyAddress, int zipCode) {
+		eleUtil.doClearData(companyAddressLine1Field);
+		eleUtil.doSendKeys(companyAddressLine1Field, companyAddress);
+		eleUtil.doSendKeys(companyZipCode, zipCode);
+		eleUtil.waitForElementPresence(companyCityStateField, WaitConstants.DEFAULT_SHORT_TIME_OUT);
+		return eleUtil.doElementIsDisplayed(companyCityStateField);
 	}
 	
 	public List<String> getBusinessTypeFieldDropdownOptions() {
-		eleUtil.doClick(professionalAccountBtn);
-		eleUtil.waitForElementsPresence(formFields, WaitConstants.DEFAULT_SHORT_TIME_OUT);
-		List<String> actualList = eleUtil.getElementsTextList(proXtraBusinessDropdownOptions);
-		//System.out.println(actualList);
-		eleUtil.doClick(backBtn);
-		return actualList;
+		return eleUtil.getElementsTextList(proXtraBusinessDropdownOptions);
 	}
 	
 	public NoticeOfFinancialIncentivePage clickNoticeOfFinancialIncentiveLink() {
@@ -361,248 +332,194 @@ public class CreateAnAccountPage {
 	}
 	
 	public String getProfessionalAccountBenefitsSectionHeader() {
-		eleUtil.doClick(professionalAccountBtn);
-		eleUtil.waitForElementsPresence(formFields, WaitConstants.DEFAULT_SHORT_TIME_OUT);
-		String actualHeader = eleUtil.doElementGetText(proXtraBenefitSectionHeader);
-		//System.out.println(actualHeader);
-		eleUtil.doClick(backBtn);
-		return actualHeader;
+		return eleUtil.doElementGetText(proXtraBenefitSectionHeader);
 	}
 	
 	public String getProfessionalAccountBenefitsDescription() {
-		eleUtil.doClick(professionalAccountBtn);
-		eleUtil.waitForElementsPresence(formFields, WaitConstants.DEFAULT_SHORT_TIME_OUT);
-		String actualText = eleUtil.doElementGetText(proXtraBenefitDescription);
-		//System.out.println(actualText);
-		eleUtil.doClick(backBtn);
-		return actualText;
+		return eleUtil.doElementGetText(proXtraBenefitDescription);
 	}
 	
 	public List<String> getProfessionalAccountBenefitsList() {
-		eleUtil.doClick(professionalAccountBtn);
-		eleUtil.waitForElementsPresence(formFields, WaitConstants.DEFAULT_SHORT_TIME_OUT);
-		List<String> actualList = eleUtil.getElementsTextList(proXtraBenefitList);
-		//System.out.println(actualList);
-		eleUtil.doClick(backBtn);
-		return actualList;
+		return eleUtil.getElementsTextList(proXtraBenefitList);
 	}
 	
 //form field functions
 	
 	public String getEmailAddressErrorMessage1() {
-		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, emailField);
 		eleUtil.doSendKeys(emailField, "");
 		eleUtil.doTabBySendKeys(emailField);
-		String actualText =  eleUtil.doElementGetText(emailFieldErrorMessage);
-		eleUtil.doClick(backBtn);
-		return actualText;
+		return eleUtil.doElementGetText(emailFieldErrorMessage);
 	}
 	
 	public String getEmailAddressErrorMessage2(String emailAddress) {
-		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, emailField);
 		eleUtil.doClearData(emailField);
 		eleUtil.doSendKeys(emailField, emailAddress);
 		eleUtil.doTabBySendKeys(emailField);
-		String actualText =  eleUtil.doElementGetText(emailFieldErrorMessage);
-		eleUtil.doClick(backBtn);
-		return actualText;
+		return  eleUtil.doElementGetText(emailFieldErrorMessage);
 	}
 	
 	public List<String> getPersonalPasswordRequirementsText() {
-		eleUtil.doClick(personalAccountBtn);
-		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, passwordField);
-		List<String> actualList = eleUtil.getElementsTextList(passwordStrengthRequirements);
-		eleUtil.doClick(backBtn);
-		return actualList;
+		return eleUtil.getElementsTextList(passwordStrengthRequirements);
 	}
 	
 	public String getProfessionalPasswordRequirementsText() {
-		eleUtil.doClick(professionalAccountBtn);
-		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, passwordField);
-		String actualText = eleUtil.doElementGetText(proXtraPasswordRequirements);
-		eleUtil.doClick(backBtn);
-		return actualText;
+		return eleUtil.doElementGetText(proXtraPasswordRequirements);
 	}
 	
 	public String getPasswordErrorMessage(String password) {
-		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, passwordField);
 		eleUtil.doClearData(passwordField);
 		eleUtil.doSendKeys(passwordField, password);
 		eleUtil.doTabBySendKeys(passwordField);
-		String actualText =  eleUtil.doElementGetText(passwordFieldErrorMessage);
-		eleUtil.doClick(backBtn);
-		return actualText;
+		return eleUtil.doElementGetText(passwordFieldErrorMessage);
+	}
+	
+	public String getPasswordErrorMessage() {
+		eleUtil.doClearData(passwordField);
+		eleUtil.doTabBySendKeys(passwordField);
+		return eleUtil.doElementGetText(passwordFieldErrorMessage);
 	}
 	
 	public String getZipCodeErrorMessage(int zipCode) {
-		eleUtil.doClick(personalAccountBtn);
-		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, zipCodeField);
 		eleUtil.doClearData(zipCodeField);
 		eleUtil.doSendKeys(zipCodeField, zipCode);
 		eleUtil.doTabBySendKeys(zipCodeField);
-		String actualText =  eleUtil.doElementGetText(zipCodeFieldErrorMessage);
-		eleUtil.doClick(backBtn);
-		return actualText;
+		return eleUtil.doElementGetText(zipCodeFieldErrorMessage);
 	}
 	
 	public String getPhoneNumberErrorMessage(String phoneNumber) {
-		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, phoneNumberField);
 		eleUtil.doClearData(phoneNumberField);
 		eleUtil.doSendKeys(phoneNumberField, phoneNumber);
 		eleUtil.doTabBySendKeys(phoneNumberField);
-		String actualText =  eleUtil.doElementGetText(phoneNumberFieldErrorMessage);
-		eleUtil.doClick(backBtn);
-		return actualText;
+		return eleUtil.doElementGetText(phoneNumberFieldErrorMessage);
 	}
 	
 	public String getFirstNameErrorMessage(String lastName) {
-		eleUtil.doClick(professionalAccountBtn);
-		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, firstNameField);
 		eleUtil.doClearData(firstNameField);
 		eleUtil.doSendKeys(firstNameField, lastName);
 		eleUtil.doTabBySendKeys(firstNameField);
-		String actualText =  eleUtil.doElementGetText(firstNameFieldErrorMessage);
-		eleUtil.doClick(backBtn);
-		return actualText;
+		return eleUtil.doElementGetText(firstNameFieldErrorMessage);
+	}
+	
+	public String getFirstNameErrorMessage() {
+		eleUtil.doClearData(firstNameField);
+		eleUtil.doTabBySendKeys(firstNameField);
+		return eleUtil.doElementGetText(firstNameFieldErrorMessage);
 	}
 	
 	public String getLastNameErrorMessage(String lastName) {
-		eleUtil.doClick(professionalAccountBtn);
-		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, lastNameField);
 		eleUtil.doClearData(lastNameField);
 		eleUtil.doSendKeys(lastNameField, lastName);
 		eleUtil.doTabBySendKeys(companyNameField);
-		String actualText =  eleUtil.doElementGetText(lastNameFieldErrorMessage);
-		eleUtil.doClick(backBtn);
-		return actualText;
+		return eleUtil.doElementGetText(lastNameFieldErrorMessage);
+	}
+	
+	public String getLastNameErrorMessage() {
+		eleUtil.doClearData(lastNameField);
+		eleUtil.doTabBySendKeys(companyNameField);
+		return eleUtil.doElementGetText(lastNameFieldErrorMessage);
 	}
 	
 	public String getCompanyNameErrorMessage(String companyName) {
-		eleUtil.doClick(professionalAccountBtn);
-		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, companyNameField);
 		eleUtil.doClearData(companyNameField);
 		eleUtil.doSendKeys(companyNameField, companyName);
+		eleUtil.doClearData(companyNameField);
 		eleUtil.doTabBySendKeys(companyNameField);
-		String actualText =  eleUtil.doElementGetText(companyNameFieldErrorMessage);
-		eleUtil.doClick(backBtn);
-		return actualText;
+		return eleUtil.doElementGetText(companyNameFieldErrorMessage);
+	}
+	
+	public String getCompanyNameErrorMessage() {
+		eleUtil.doClearData(companyNameField);
+		eleUtil.doTabBySendKeys(companyNameField);
+		return eleUtil.doElementGetText(companyNameFieldErrorMessage);
 	}
 	
 	public String getCompanyAddressErrorMessage(String companyAddress) {
-		eleUtil.doClick(professionalAccountBtn);
-		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, companyAddressLine1Field);
 		eleUtil.doClearData(companyAddressLine1Field);
 		eleUtil.doSendKeys(companyAddressLine1Field, companyAddress);
 		eleUtil.doTabBySendKeys(companyAddressLine1Field);
-		String actualText =  eleUtil.doElementGetText(companyAddressFieldErrorMessage);
-		eleUtil.doClick(backBtn);
-		return actualText;
+		eleUtil.doClearData(companyAddressLine1Field);
+		return eleUtil.doElementGetText(companyAddressFieldErrorMessage);
+	}
+	
+	public String getCompanyAddressErrorMessage() {
+		eleUtil.doClearData(companyAddressLine1Field);
+		eleUtil.doTabBySendKeys(companyAddressLine1Field);
+		return eleUtil.doElementGetText(companyAddressFieldErrorMessage);
+	}
+	
+	public String getCompanyZipCodeErrorMessage(String companyAddress, int zipCode) {
+		eleUtil.doClearData(companyAddressLine1Field);
+		eleUtil.doSendKeys(companyAddressLine1Field, companyAddress);
+		eleUtil.doTabBySendKeys(companyAddressLine1Field);
+		eleUtil.doClearData(companyZipCode);
+		eleUtil.doSendKeys(companyZipCode, zipCode);
+		return eleUtil.doElementGetText(companyZipCodeErrorMessage);
 	}
 	
 	public String getBusinessTypeErrorMessage() {
-		eleUtil.doClick(professionalAccountBtn);
-		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, proXtraBusinessDropdownField);
+		eleUtil.doSelectDropDownByValue(proXtraBusinessDropdownField, "HANDYPERSON");
 		eleUtil.doSelectDropDownByValue(proXtraBusinessDropdownField, "DEFAULT");
-		eleUtil.doTabBySendKeys(proXtraBusinessDropdownField);
-		eleUtil.doClick(createAccountBtn);
-		String actualText =  eleUtil.doElementGetText(proXtraBusinessFieldErrorMessage);
-		eleUtil.doClick(backBtn);
-		return actualText;
+		return eleUtil.doElementGetText(proXtraBusinessFieldErrorMessage);
 	}
-	
-	
 	
 	public String clickShowPasswordLink(String password) {
 		WebElement showPassword = driver.findElement(showPasswordLink);
-		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, passwordField);
 		eleUtil.doClearData(passwordField);
 		eleUtil.doSendKeys(passwordField, password);
 		jsUtil.clickElementByJS(showPassword);
 		eleUtil.doElementIsDisplayed(hidePasswordLink);
-		String actualText =  eleUtil.doElementGetText(hidePasswordLink);
-		eleUtil.doClick(backBtn);
-		return actualText;
+		return eleUtil.doElementGetText(hidePasswordLink);
 	}
 	
 	public String clickHidePasswordLink(String password) {
 		WebElement showPassword = driver.findElement(showPasswordLink);
-		
-		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, passwordField);
 		eleUtil.doClearData(passwordField);
 		eleUtil.doSendKeys(passwordField, password);
 		jsUtil.clickElementByJS(showPassword);
 		WebElement hidePassword = driver.findElement(hidePasswordLink);
 		jsUtil.clickElementByJS(hidePassword);
-		String actualText =  eleUtil.doElementGetText(showPasswordLink);
-		eleUtil.doClick(backBtn);
-		return actualText;
+		return eleUtil.doElementGetText(showPasswordLink);
 	}
 	
 	public String getPasswordContainsMiniumCharatersIcon(String password) {
-		eleUtil.doClick(personalAccountBtn);
-		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, passwordField);
 		eleUtil.doClearData(passwordField);
 		eleUtil.doSendKeys(passwordField, password);
-		String srcLink = eleUtil.getElementAttribute(passwordRequirementMinCharIcon, "src");
-		eleUtil.doClick(backBtn);
-		return srcLink;
+		return eleUtil.getElementAttribute(passwordRequirementMinCharIcon, "src");
 	}
 	
 	public String getPasswordContainsUppercaseLetterIcon(String password) {
-		eleUtil.doClick(personalAccountBtn);
-		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, passwordField);
 		eleUtil.doClearData(passwordField);
 		eleUtil.doSendKeys(passwordField, password);
-		String srcLink = eleUtil.getElementAttribute(passwordRequirementUppercaseLetterIcon, "src");
-		eleUtil.doClick(backBtn);
-		return srcLink;
+		return eleUtil.getElementAttribute(passwordRequirementUppercaseLetterIcon, "src");
 	}
 	
 	public String getPasswordContainsNumberIcon(String password) {
-		eleUtil.doClick(personalAccountBtn);
-		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, passwordField);
 		eleUtil.doClearData(passwordField);
 		eleUtil.doSendKeys(passwordField, password);
-		String srcLink = eleUtil.getElementAttribute(passwordRequirementNumberIcon, "src");
-		eleUtil.doClick(backBtn);
-		return srcLink;
+		return eleUtil.getElementAttribute(passwordRequirementNumberIcon, "src");
 	}
 	
 	public String getPasswordContainsLowercaseLetterIcon(String password) {
-		eleUtil.doClick(personalAccountBtn);
-		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, passwordField);
 		eleUtil.doClearData(passwordField);
 		eleUtil.doSendKeys(passwordField, password);
-		String srcLink = eleUtil.getElementAttribute(passwordRequirementLowercaseLetterIcon, "src");
-		eleUtil.doClick(backBtn);
-		return srcLink;
+		return eleUtil.getElementAttribute(passwordRequirementLowercaseLetterIcon, "src");
 	}
 	
 	public String getPasswordContainsSpecialCharaterIcon(String password) {
-		eleUtil.doClick(personalAccountBtn);
-		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, passwordField);
 		eleUtil.doClearData(passwordField);
 		eleUtil.doSendKeys(passwordField, password);
-		String srcLink = eleUtil.getElementAttribute(passwordRequirementSpecialCharIcon, "src");
-		eleUtil.doClick(backBtn);
-		return srcLink;
+		return eleUtil.getElementAttribute(passwordRequirementSpecialCharIcon, "src");
 	}
 	
 	public String getPasswordStrenthMeterText(String password) {
-		eleUtil.doClick(personalAccountBtn);
-		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, passwordField);
 		eleUtil.doClearData(passwordField);
 		eleUtil.doSendKeys(passwordField, password);
-		String actualText = eleUtil.doElementGetText(passwordStrengthMeter);
-		eleUtil.doClick(backBtn);
-		return actualText;
+		return eleUtil.doElementGetText(passwordStrengthMeter);
 	}
 
 //*****completely fill in the form fields	
 	
-	public String fillInPersonalForm(String emailAddress, String password, int zipCode, String phoneNumber) {
-		eleUtil.doClick(personalAccountBtn);
-		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, emailField);
+	public void fillInPersonalForm(String emailAddress, String password, int zipCode, String phoneNumber) {
 		eleUtil.doSendKeys(emailField, emailAddress);
 		eleUtil.doSendKeys(passwordField, password);
 		eleUtil.doSendKeys(zipCodeField, zipCode);
@@ -610,14 +527,9 @@ public class CreateAnAccountPage {
 		eleUtil.doClick(keepMeSignedInCheckBox);
 		eleUtil.doClick(verifyPhoneNumberCheckBox);
 		eleUtil.doClick(createAccountBtn);
-		String actualText =  eleUtil.doElementGetText(captchaMessage);
-		eleUtil.doClick(backBtn);
-		return actualText;
 	}
 	
-	public String fillInProfessionalForm(String emailAddress, String password, String companyName, String firstName, String lastName, String phoneNumber, String companyAddress, String businessType ) {
-		eleUtil.doClick(professionalAccountBtn);
-		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, emailField);
+	public String fillInProfessionalForm(String emailAddress, String password, String companyName, String firstName, String lastName, String phoneNumber, String companyAddress, String unitNumber, int zipCode, String businessType ) {
 		eleUtil.doSendKeys(emailField, emailAddress);
 		eleUtil.doSendKeys(passwordField, password);
 		eleUtil.doSendKeys(companyNameField, companyName);
@@ -625,33 +537,44 @@ public class CreateAnAccountPage {
 		eleUtil.doSendKeys(lastNameField, lastName);
 		eleUtil.doSendKeys(phoneNumberField, phoneNumber);
 		eleUtil.doSendKeys(companyAddressLine1Field, companyAddress);
+		clickAddCompanyAddressLine2Link();
+		eleUtil.doSendKeys(companyAddressLine2Field, unitNumber);
+		eleUtil.doSendKeys(companyZipCode, zipCode);
 		eleUtil.doSelectDropDownByVisibleText(proXtraBusinessDropdownField, businessType);
 		eleUtil.doClick(keepMeSignedInCheckBox);
 		eleUtil.doClick(createAccountBtn);
-		String actualText =  eleUtil.doElementGetText(captchaMessage);
-		eleUtil.doClick(backBtn);
-		return actualText;
+		return eleUtil.waitForElementPresence(registrationSuccessHeader, WaitConstants.DEFAULT_SHORT_TIME_OUT).getText();
+	}
+
+//successful registration
+	public String getChooseSubscriptionsHeaderText() {
+		return eleUtil.waitForElementPresence(chooseSubscriptionsHeader, WaitConstants.DEFAULT_SHORT_TIME_OUT).getText();
 	}
 	
-	public String fillInProfessionalFormWithAddressLine2(String emailAddress, String password, String companyName, String firstName, String lastName, String phoneNumber, String companyAddress, String companyAddress2, String businessType ) {
-		eleUtil.doClick(professionalAccountBtn);
-		eleUtil.clickWhenReady(WaitConstants.DEFAULT_SHORT_TIME_OUT, emailField);
-		eleUtil.doSendKeys(emailField, emailAddress);
-		eleUtil.doSendKeys(passwordField, password);
-		eleUtil.doSendKeys(companyNameField, companyName);
-		eleUtil.doSendKeys(firstNameField, firstName);
-		eleUtil.doSendKeys(lastNameField, lastName);
-		eleUtil.doSendKeys(phoneNumberField, phoneNumber);
-		eleUtil.doSendKeys(companyAddressLine1Field, companyAddress);
-		eleUtil.doClick(addCompanyAddressLine2Link);
-		eleUtil.doSendKeys(companyAddrLine2Field, companyAddress2);
-		eleUtil.doSelectDropDownByVisibleText(proXtraBusinessDropdownField, businessType);
-		eleUtil.doClick(keepMeSignedInCheckBox);
-		eleUtil.doClick(createAccountBtn);
-		String actualText =  eleUtil.doElementGetText(captchaMessage);
-		eleUtil.doClick(backBtn);
-		return actualText;
+	public String getChooseSubscriptionsMessageText() {
+		return eleUtil.waitForElementPresence(chooseSubscriptionsMessage, WaitConstants.DEFAULT_SHORT_TIME_OUT).getText();
 	}
+	
+	public List<String> getChooseSubscriptionsListText() {
+		return eleUtil.getElementsTextList(chooseSubscriptionsList);
+	}
+	
+	public List<String> getChooseSubscriptionsButtonsText() {
+		return eleUtil.getElementsTextList(chooseSubscriptionsButtons);
+	}
+	
+	public void chooseSubcriptions_clickSubscribeButton() {
+		eleUtil.doClick(chooseSubscriptionsSubscribeBtn);
+	}
+	
+	public void chooseSubscriptions_clickSkipButton() {
+		eleUtil.doClick(chooseSubscriptionsSkipBtn);
+	}
+	
+	
+
+	
+	
 	
 	
 	
