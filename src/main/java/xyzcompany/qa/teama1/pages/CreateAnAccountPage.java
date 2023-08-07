@@ -58,7 +58,7 @@ public class CreateAnAccountPage {
 	private By keepMeSignedInToolTipCloseBtn = By.xpath("//div[@class='tippy-content']//button");
 	private By captchaMessage = By.xpath("//div[@class='form-input-error__message u--marginXsmall-top']");
 	private By legalLinksText = By.className("modal-legal-links");
-	private By legalLinks = By.xpath("//div[@class='modal-legal-links u--paddingSmall-top u__text-align--center u__small']/a");
+	private By legalLinks = By.xpath("//div[contains(@class,'modal-legal-links u--paddingSmall-top u__text-align--center')]/a");
 	private By proXtraTermsAndConditionsLink = By.linkText("Pro Xtra Terms and Conditions");
 	private By privacyAndSecurityStatementLink = By.linkText("Privacy and Security Statement");
 	private By myAccountTermsAndConditionsLink = By.linkText("My Account Terms and Conditions");
@@ -254,9 +254,8 @@ public class CreateAnAccountPage {
 		return eleUtil.getElementsTextList(legalLinks);
 	}
 		
-	public List<String> getLegalLinksSectionText() {
-		eleUtil.waitForElementsPresence(checkBoxLabels, WaitConstants.DEFAULT_SHORT_TIME_OUT);
-		return eleUtil.getElementsTextList(legalLinksText);
+	public String getLegalLinksSectionText() {
+		return eleUtil.doElementGetText(legalLinksText);
 	}
 
 	public ProXtraTermsAndConditionsPage clickProXtraTermsAndConditionsLink() {

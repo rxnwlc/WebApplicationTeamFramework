@@ -9,6 +9,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import xyzcompany.qa.teama1.base.BaseTest;
 import xyzcompany.qa.teama1.constants.AppConstants;
@@ -420,13 +421,49 @@ public class CreateAProfessionalAccountTest extends BaseTest{
 	@Test(dataProvider = "getProfessionalFormTestData")
 	public void professionalAccount_EnterDataInFormFieldsTest(String emailAddress, String password, String companyName, String firstName, String lastName, String phoneNumber, String companyAddress, String unitNumber, int zipCode, String businessType ) {
 		String actualText = createAnAccountPage.fillInProfessionalForm(emailAddress, password, companyName, firstName, lastName, phoneNumber, companyAddress, unitNumber, zipCode, businessType);
-		Assert.assertEquals(actualText, AppConstants.SUCCESSFUL_REGISTRATION_HEADER_VALUE);
+		softAssert.assertEquals(actualText, AppConstants.SUCCESSFUL_REGISTRATION_HEADER_VALUE);
+		String actualHeaderText = createAnAccountPage.getChooseSubscriptionsHeaderText();
+		softAssert.assertEquals(actualHeaderText, AppConstants.CHOOSE_SUBSCRIPTIONS_HEADER_VALUE);
+		String actualMessageText = createAnAccountPage.getChooseSubscriptionsMessageText();
+		softAssert.assertEquals(actualMessageText, AppConstants.CHOOSE_SUBSCRIPTIONS_MESSAGE_VALUE);
+		List<String> actualSubList = createAnAccountPage.getChooseSubscriptionsListText();
+		System.out.println(actualSubList);
+		softAssert.assertEquals(actualSubList, AppConstants.CHOOSE_SUBSCRIPTIONS_OPTIONS_LIST);
+		List<String> actualBtnTextList = createAnAccountPage.getChooseSubscriptionsButtonsText();
+		softAssert.assertEquals(actualBtnTextList, AppConstants.CHOOSE_SUBSCRIPTIONS_BUTTONS_LIST_1);
+		String actualLegalSecText = createAnAccountPage.getLegalLinksSectionText();
+		softAssert.assertEquals(actualLegalSecText, AppConstants.CHOOSE_SUBSCRIPTIONS_LEGAL_LINKS_SECTION);
+		List<String> actualLegalLinksText = createAnAccountPage.getLegalLinksText();
+		softAssert.assertEquals(actualLegalLinksText, AppConstants.CHOOSE_SUBSCRIPTIONS_LEGAL_LINKS_LIST);
+		
+		softAssert.assertAll();
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	@Test
+	public void chooseSubscriptions_LegalLinksTextTest() {
+		List<String> actualText = createAnAccountPage.getLegalLinksText();
+		Assert.assertEquals(actualText, AppConstants.CREATE_AN_ACCOUTN_PAGE_PRO_XTRA_LEGAL_LINKS_LIST);
+	}
+		
+	@Test
+	public void chooseSubscriptions_LegalLinksSectionTextTest() {
+		List<String> actualList= createAnAccountPage.getLegalLinksSectionText();
+		Assert.assertEquals(actualList, AppConstants.CREATE_AN_ACCOUTN_PAGE_PRO_XTRA_LEGAL_LINKS_SECTION_LIST);
 	}
 	
 	@Test
-	public void successfulRegistration_HeaderTextTest() {
-		String actualText = createAnAccountPage.getChooseSubscriptionsHeaderText();
-		Assert.assertEquals(actualText, AppConstants.SUCCESSFUL_REGISTRATION_HEADER_VALUE);
+	public void chooseSubscriptions_ClickProXtraTermsAndConditionsLinkTest() {
+		createAnAccountPage.clickProXtraTermsAndConditionsLink();
+		String actualTitle = commonPageElements.getPageTitle(AppConstants.PRO_XTRA_TERMS_AND_CONDITIONS_PAGE_TITLE_VALUE, AppConstants.PRO_XTRA_TERMS_AND_CONDITIONS_PAGE_NAME_VALUE);
+		proXtraTermsAndConditionsPage.closeTab();
+		Assert.assertEquals(actualTitle, AppConstants.PRO_XTRA_TERMS_AND_CONDITIONS_PAGE_TITLE_VALUE);
 	}
 	
 		

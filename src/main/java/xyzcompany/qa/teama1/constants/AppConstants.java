@@ -161,7 +161,7 @@ public class AppConstants {
 	public static final String CREATE_AN_ACCOUNT_PAGE_CAPTCHA_MESSAGE_VALUE = "Please verify that you are not a robot.";
 	public static final String CREATE_AN_ACCOUNT_PAGE_CURRENT_ACCOUNT_HOLDER_QUESTION_VALUE = "Already Have an Account?Sign In";
 	public static final int CREATE_AN_ACCOUTN_PAGE_LEGAL_LINKS_COUNT = 3;
-	public static final List<String> CREATE_AN_ACCOUTN_PAGE_LEGAL_LINKS_SECTION_LIST = Arrays.asList("By selecting 'Create an Account' you are agreeing to the Pro Xtra Terms and Conditions, Privacy and Security Statement, & My Account Terms and Conditions.");
+	public static final String CREATE_AN_ACCOUTN_PAGE_LEGAL_LINKS_SECTION_TEXT = "By selecting 'Create an Account' you are agreeing to the Pro Xtra Terms and Conditions, Privacy and Security Statement, & My Account Terms and Conditions.";
 	public static final List<String> CREATE_AN_ACCOUTN_PAGE_LEGAL_LINKS_LIST = Arrays.asList("Pro Xtra Terms and Conditions", "Privacy and Security Statement", "My Account Terms and Conditions");
 	public static final List<String> CREATE_AN_ACCOUNT_PAGE_PRO_XTRA_FORM_CHECKBOX_LIST = Arrays.asList("Keep me signed in Uncheck if using a public or shared device");
 	public static final String CREATE_AN_ACCOUNT_PAGE_PRO_XTRA_HEADER_VALUE = "Create a Pro Xtra Account";
@@ -187,7 +187,7 @@ public class AppConstants {
 	public static final List<String> CREATE_AN_ACCOUNT_PAGE_PRO_XTRA_SELECT_BUSINESS_OR_TRADE_DROPDOWN_OPTIONS_LIST = Arrays.asList("Select a Business or Trade", "Carpentry", "Education", "Electrical", "Fire/Water Restoration", "Government", "Handyperson", "Healthcare", "Hotels and Lodging", "Housing Authorities", "Import/Export", "Janitorial Building Services", "Landscaping", "Manufacturing", "MultiFamily Residential Construction", "Non-Profit Organization", "Non-Residential Construction", "Non-Residential Remodeling", "Painter", "Plumbing and HVAC", "Property Investment", "Property Management, Non-Residential", "Property Management, Single and Multifamily", "Property Owner", "Residential Remodeling", "Restaurants and Event Spaces", "Roofing", "Single-Family Residential Construction", "Other");
 	public static final String CREATE_AN_ACCOUNT_PAGE_PRO_XTRA_ACCOUNT_CREATION_BUTTON_LABEL_VALUE = "Register for Pro Xtra";
 	public static final int CREATE_AN_ACCOUTN_PAGE_PRO_XTRA_LEGAL_LINKS_COUNT = 4;
-	public static final List<String> CREATE_AN_ACCOUTN_PAGE_PRO_XTRA_LEGAL_LINKS_SECTION_LIST = Arrays.asList("By selecting 'Register for Pro Xtra' you are agreeing to the Pro Xtra Terms and Conditions, Privacy and Security Statement, Notice of Financial Incentive & My Account Terms and Conditions.");
+	public static final String CREATE_AN_ACCOUTN_PAGE_PRO_XTRA_LEGAL_LINKS_SECTION_TEXT = "By selecting 'Register for Pro Xtra' you are agreeing to the Pro Xtra Terms and Conditions, Privacy and Security Statement, Notice of Financial Incentive & My Account Terms and Conditions.";
 	public static final List<String> CREATE_AN_ACCOUTN_PAGE_PRO_XTRA_LEGAL_LINKS_LIST = Arrays.asList("Pro Xtra Terms and Conditions", "Privacy and Security Statement", "Notice of Financial Incentive", "My Account Terms and Conditions");
 	public static final String CREATE_AN_ACCOUNT_PAGE_SIGN_IN_FORM_MESSAGE_VALUE = "First, enter your email address";
 	
@@ -213,8 +213,11 @@ public class AppConstants {
 	public static final String SUCCESSFUL_REGISTRATION_HEADER_VALUE = "You're Registered!";
 	public static final String CHOOSE_SUBSCRIPTIONS_HEADER_VALUE = "Now Choose Your Subscriptions";
 	public static final String CHOOSE_SUBSCRIPTIONS_MESSAGE_VALUE = "Let us know which emails you'd like to receive for great deals and project ideas. Not sure? You can update your choices anytime from your My Account page.";
-	
-	
+	public static final List<String> CHOOSE_SUBSCRIPTIONS_OPTIONS_LIST = Arrays.asList("PRO Deals designed to make your job easier.", "The Home Depot Sneak peaks and exclusive savings.", "Local Ad First-looks at specials from your store.", "Special Buy of the Day The name says it all. Daily deals, delivered.", "The Garden Club All the news that's fit to pot, plus email-only offers.", "Style & Décor Room and style ideas plus design tips and more.");
+	public static final List<String> CHOOSE_SUBSCRIPTIONS_BUTTONS_LIST_1 = Arrays.asList("Subscribe", "Skip for now & Continue Shopping");
+	public static final List<String> CHOOSE_SUBSCRIPTIONS_BUTTONS_LIST_2 = Arrays.asList("Save", "Skip for now & Continue Shopping");
+	public static final String CHOOSE_SUBSCRIPTIONS_LEGAL_LINKS_SECTION = "By selecting 'Register for Pro Xtra' you are agreeing to the Terms and Privacy and Security Statement below";
+	public static final List<String> CHOOSE_SUBSCRIPTIONS_LEGAL_LINKS_LIST = Arrays.asList("My Account Terms & Conditions", "Privacy & Security Statement");
 	
 	public static final String NOTICE_OF_FINANCIAL_INCENTIVE_PAGE_NAME_VALUE = "Pro Xtra Terms & Conditions";
 	public static final String NOTICE_OF_FINANCIAL_INCENTIVE_PAGE_TITLE_VALUE = "Pro Xtra Terms & Conditions - The Home Depot";
